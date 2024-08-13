@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "XRecommend:create": "Create XRecommend related data",
+    "XRecommend:read": "View XRecommend related data",
+    "XRecommend:update": "Update XRecommend related data",
+    "XRecommend:delete": "Delete XRecommend related data"
+  }
+}
