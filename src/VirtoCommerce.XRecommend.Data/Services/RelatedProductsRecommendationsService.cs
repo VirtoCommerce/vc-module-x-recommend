@@ -49,14 +49,30 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             content = content.Replace($"{code}.", string.Empty);
         }
 
+        // main product and variations (if exist) will probably be captured in the semantic query
+        // try to remove them by setting take = MaxRecommendations + variations count + 1 (main product) and removing them from the result
+        // until we can use 'must_not' filter in the search request
+        var excludedProductIds = new List<string> { criteria.ProductId };
+        if (productDocument.TryGetValue("__variations", out var variationsObj) && variationsObj is object[] variationIds)
+        {
+            foreach (var variationId in variationIds.OfType<string>())
+            {
+                excludedProductIds.Add(variationId);
+            }
+        }
+
         // recommended products must be visible
-        var recommendedProductsSearchRequest = GetRecommendedProductsSearchRequest(criteria, content, store.Catalog);
+        var recommendedProductsSearchRequest = GetRecommendedProductsSearchRequest(criteria, content, store.Catalog, criteria.MaxRecommendations + excludedProductIds.Count);
         var recommendedProductsSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, recommendedProductsSearchRequest);
 
         result = recommendedProductsSearchResult.Documents.Select(x => x.Id).ToList();
 
-        // optional*: boost semantic query
-        // optional**: exclude productfamilyId ('must_not' filter?)
+        foreach (var excludedProductId in excludedProductIds)
+        {
+            result.Remove(excludedProductId);
+        }
+
+        result = result.Take(criteria.MaxRecommendations).ToList();
 
         return result;
     }
@@ -68,17 +84,17 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             .WithUserId(criteria.UserId)
             .WithPaging(0, 1)
             .AddObjectIds(new List<string> { criteria.ProductId })
-            .WithIncludeFields("code", "__content");
+            .WithIncludeFields("code", "__content", "__variations");
 
         return builder.Build();
     }
 
-    private static SearchRequest GetRecommendedProductsSearchRequest(GetRecommendationsCriteria criteria, string content, string catalogId)
+    private static SearchRequest GetRecommendedProductsSearchRequest(GetRecommendationsCriteria criteria, string content, string catalogId, int take)
     {
         var builder = new IndexSearchRequestBuilder()
             .WithStoreId(criteria.StoreId)
             .WithUserId(criteria.UserId)
-            .WithPaging(0, criteria.MaxRecommendations)
+            .WithPaging(0, take)
             .WithSearchPhrase(content)
             .WithIncludeFields("_id");
 

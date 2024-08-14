@@ -34,7 +34,7 @@ public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQu
 
         var result = new GetRecommendationsResult
         {
-            Products = recommendedProducts.Products.ToList(),
+            Products = recommendedProducts.Products.OrderBy(x => recommendedProductIds.IndexOf(x.Id)).ToList(),
         };
 
         // add fallback products if needed
