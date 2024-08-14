@@ -1,10 +1,10 @@
-﻿namespace VirtoCommerce.XRecommend.Core.Models;
+namespace VirtoCommerce.XRecommend.Core.Models;
 
-public class RelatedProductsCriteria
+public class GetRecommendationsCriteria
 {
     public string StoreId { get; set; }
 
-    public string FallbackFilter { get; set; }
+    public string UserId { get; set; }
 
     public string ProductId { get; set; }
 

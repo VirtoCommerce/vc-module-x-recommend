@@ -1,9 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using VirtoCommerce.SearchModule.Core.Services;
-using VirtoCommerce.StoreModule.Core.Services;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Xapi.Core.Infrastructure;
+using VirtoCommerce.XCatalog.Core.Queries;
 using VirtoCommerce.XDigitalCatalog.Queries;
 using VirtoCommerce.XRecommend.Core.Models;
 using VirtoCommerce.XRecommend.Core.Queries;
@@ -13,40 +15,75 @@ namespace VirtoCommerce.XRecommend.Data.Queries;
 
 public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQuery, GetRecommendationsResult>
 {
-    private readonly IRecommendService _recommendService;
-    private readonly IStoreService _storeService;
-    private readonly ISearchProvider _searchProvider;
+    private readonly IRecommendationsService _recommendService;
     private readonly IMediator _mediator;
 
-    public GetRecommendationsQueryHandler(IRecommendService recommendService, IStoreService storeService, ISearchProvider searchProvider, IMediator mediator)
+    public GetRecommendationsQueryHandler(IRecommendationsService recommendService, IMediator mediator)
     {
         _recommendService = recommendService;
-        _storeService = storeService;
-        _searchProvider = searchProvider;
         _mediator = mediator;
     }
 
     public virtual async Task<GetRecommendationsResult> Handle(GetRecommendationsQuery request, CancellationToken cancellationToken)
     {
-        var searchProductsQuery = new SearchProductQuery
+        var recommendationsCriteria = GetRelatedProductsCriteria(request);
+        var recommendedProductIds = await _recommendService.GetRecommendationsAsync(recommendationsCriteria);
+
+        var loadProductsQuery = GetLoadProductsQuery(request, recommendedProductIds);
+        var recommendedProducts = await _mediator.Send(loadProductsQuery, cancellationToken);
+
+        var result = new GetRecommendationsResult
         {
-            StoreId = request.StoreId,
-            UserId = request.UserId,
-            OrganizationId = request.OrganizationId,
-            Take = request.MaxRecommendations,
-            Skip = 0,
-            IncludeFields = request.IncludeFields,
-            CurrencyCode = request.CurrencyCode,
-            CultureName = request.CultureName,
+            Products = recommendedProducts.Products.ToList(),
         };
 
-        var searchProductsResult = await _mediator.Send(searchProductsQuery);
-
-        var result = new GetRecommendationsResult()
+        // add fallback products if needed
+        if (!string.IsNullOrEmpty(request.FallbackProductsFilter) && request.MaxRecommendations > result.Products.Count)
         {
-            Products = searchProductsResult.Results,
-        };
+            var searchProductsQuery = GetSearchProductQuery(request, request.MaxRecommendations - result.Products.Count);
+            var fallbackProductsResult = await _mediator.Send(searchProductsQuery, cancellationToken);
+            result.Products.AddRange(fallbackProductsResult.Results);
+        }
 
         return result;
+    }
+
+    private static GetRecommendationsCriteria GetRelatedProductsCriteria(GetRecommendationsQuery request)
+    {
+        return new GetRecommendationsCriteria
+        {
+            StoreId = request.StoreId,
+            MaxRecommendations = request.MaxRecommendations,
+            ProductId = request.ProductId,
+        };
+    }
+
+    private static LoadProductsQuery GetLoadProductsQuery(GetRecommendationsQuery request, IList<string> recommendedProductIds)
+    {
+        return new LoadProductsQuery
+        {
+            StoreId = request.StoreId,
+            ObjectIds = recommendedProductIds,
+            CultureName = request.CultureName,
+            CurrencyCode = request.CurrencyCode,
+            UserId = request.UserId,
+            OrganizationId = request.OrganizationId,
+            IncludeFields = request.IncludeFields,
+        };
+    }
+
+    private static SearchProductQuery GetSearchProductQuery(GetRecommendationsQuery request, int take)
+    {
+        return new SearchProductQuery
+        {
+            StoreId = request.StoreId,
+            CultureName = request.CultureName,
+            CurrencyCode = request.CurrencyCode,
+            UserId = request.UserId,
+            OrganizationId = request.OrganizationId,
+            IncludeFields = request.IncludeFields,
+            Take = take,
+            Filter = request.FallbackProductsFilter,
+        };
     }
 }

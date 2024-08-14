@@ -22,7 +22,7 @@ public class Module : IModule, IHasConfiguration
         var graphQLBuilder = new CustomGraphQLBuilder(serviceCollection);
         graphQLBuilder.AddSchema(typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
 
-        serviceCollection.AddTransient<IRecommendService, RecommendService>();
+        serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

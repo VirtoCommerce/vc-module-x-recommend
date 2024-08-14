@@ -10,7 +10,7 @@ namespace VirtoCommerce.XRecommend.Core.Queries
     {
         public string ProductId { get; set; }
         public string Model { get; set; }
-        public string FallbackProductsQuery { get; set; }
+        public string FallbackProductsFilter { get; set; }
         public int MaxRecommendations { get; set; }
 
         public override IEnumerable<QueryArgument> GetArguments()
@@ -22,7 +22,7 @@ namespace VirtoCommerce.XRecommend.Core.Queries
 
             yield return Argument<StringGraphType>(nameof(ProductId), description: "Product ID");
             yield return Argument<StringGraphType>(nameof(Model), description: "Recommendation model");
-            yield return Argument<StringGraphType>(nameof(FallbackProductsQuery), description: "Fallback query");
+            yield return Argument<StringGraphType>(nameof(FallbackProductsFilter), description: "Fallback filter");
             yield return Argument<StringGraphType>(nameof(MaxRecommendations), description: "Max number of returned recommendations");
         }
 
@@ -32,7 +32,7 @@ namespace VirtoCommerce.XRecommend.Core.Queries
 
             ProductId = context.GetArgument<string>(nameof(ProductId));
             Model = context.GetArgument<string>(nameof(Model));
-            FallbackProductsQuery = context.GetArgument<string>(nameof(FallbackProductsQuery));
+            FallbackProductsFilter = context.GetArgument<string>(nameof(FallbackProductsFilter));
             MaxRecommendations = context.GetArgument<int>(nameof(MaxRecommendations));
 
             if (MaxRecommendations == 0)
