@@ -33,7 +33,7 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
         }
 
         // get input product
-        var productSearchRequest = GetInputProductSearchRequest(criteria);
+        var productSearchRequest = GetInputProductSearchRequest(criteria, criteria.ProductId);
         var productSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, productSearchRequest);
 
         // take content and form recommendations search request
@@ -61,6 +61,28 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             }
         }
 
+        if (productDocument.TryGetValue("mainproductid", out var mainProductIdObj) && mainProductIdObj is string mainProductId && !string.IsNullOrEmpty(mainProductId))
+        {
+            // take main product and it's variations
+            productSearchRequest = GetInputProductSearchRequest(criteria, mainProductId);
+            productSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, productSearchRequest);
+            productDocument = productSearchResult.Documents.FirstOrDefault();
+
+            if (productDocument != null)
+            {
+                excludedProductIds.Add(mainProductId);
+
+                if (productDocument.TryGetValue("__variations", out variationsObj) && variationsObj is object[] mainVariationIds)
+                {
+                    foreach (var variationId in mainVariationIds.OfType<string>())
+                    {
+                        excludedProductIds.Add(variationId);
+                    }
+                }
+            }
+
+        }
+
         // recommended products must be visible
         var recommendedProductsSearchRequest = GetRecommendedProductsSearchRequest(criteria, content, store.Catalog, criteria.MaxRecommendations + excludedProductIds.Count);
         var recommendedProductsSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, recommendedProductsSearchRequest);
@@ -77,14 +99,14 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
         return result;
     }
 
-    private static SearchRequest GetInputProductSearchRequest(GetRecommendationsCriteria criteria)
+    private static SearchRequest GetInputProductSearchRequest(GetRecommendationsCriteria criteria, string prodcutId)
     {
         var builder = new IndexSearchRequestBuilder()
             .WithStoreId(criteria.StoreId)
             .WithUserId(criteria.UserId)
             .WithPaging(0, 1)
-            .AddObjectIds(new List<string> { criteria.ProductId })
-            .WithIncludeFields("code", "__content", "__variations");
+            .AddObjectIds(new List<string> { prodcutId })
+            .WithIncludeFields("code", "__content", "__variations", "mainproductid");
 
         return builder.Build();
     }
