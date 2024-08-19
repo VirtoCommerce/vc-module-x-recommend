@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.SearchModule.Core.Extensions;
 using VirtoCommerce.SearchModule.Core.Model;
 using VirtoCommerce.SearchModule.Core.Services;
 using VirtoCommerce.StoreModule.Core.Services;
@@ -15,15 +17,32 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
 {
     private readonly IStoreService _storeService;
     private readonly ISearchProvider _searchProvider;
+    private readonly IConfiguration _configuration;
 
-    public RelatedProductsRecommendationsService(IStoreService storeService, ISearchProvider searchProvider)
+    public string Model { get; set; } = "related-products";
+
+    public RelatedProductsRecommendationsService(IStoreService storeService, ISearchProvider searchProvider, IConfiguration configuration)
     {
         _searchProvider = searchProvider;
         _storeService = storeService;
+        _configuration = configuration;
     }
 
     public async Task<IList<string>> GetRecommendationsAsync(GetRecommendationsCriteria criteria)
     {
+        // check ES8 enabled and return mock result if not (temporary)
+        if (!_configuration.SearchProviderActive("ElasticSearch8"))
+        {
+            var builder = new IndexSearchRequestBuilder()
+                .WithStoreId(criteria.StoreId)
+                .WithUserId(criteria.UserId)
+                .WithPaging(0, criteria.MaxRecommendations)
+                .WithIncludeFields("_id");
+
+            var mockResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, builder.Build());
+            return mockResult.Documents.Select(x => x.Id).ToList();
+        }
+
         var result = new List<string>();
 
         var store = await _storeService.GetNoCloneAsync(criteria.StoreId);
@@ -43,23 +62,11 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             return result;
         }
 
-        // try exclude code from content string
-        if (productDocument.TryGetValue("code", out var codeObj) && codeObj is string code)
-        {
-            content = content.Replace($"{code}.", string.Empty);
-        }
-
         // main product and variations (if exist) will probably be captured in the semantic query
         // try to remove them by setting take = MaxRecommendations + variations count + 1 (main product) and removing them from the result
         // until we can use 'must_not' filter in the search request
         var excludedProductIds = new List<string> { criteria.ProductId };
-        if (productDocument.TryGetValue("__variations", out var variationsObj) && variationsObj is object[] variationIds)
-        {
-            foreach (var variationId in variationIds.OfType<string>())
-            {
-                excludedProductIds.Add(variationId);
-            }
-        }
+        excludedProductIds.AddRange(GetVariations(productDocument));
 
         if (productDocument.TryGetValue("mainproductid", out var mainProductIdObj) && mainProductIdObj is string mainProductId && !string.IsNullOrEmpty(mainProductId))
         {
@@ -70,17 +77,9 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
 
             if (productDocument != null)
             {
-                excludedProductIds.Add(mainProductId);
-
-                if (productDocument.TryGetValue("__variations", out variationsObj) && variationsObj is object[] mainVariationIds)
-                {
-                    foreach (var variationId in mainVariationIds.OfType<string>())
-                    {
-                        excludedProductIds.Add(variationId);
-                    }
-                }
+                excludedProductIds.Add(productDocument.Id);
+                excludedProductIds.AddRange(GetVariations(productDocument));
             }
-
         }
 
         // recommended products must be visible
@@ -97,6 +96,16 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
         result = result.Take(criteria.MaxRecommendations).ToList();
 
         return result;
+    }
+
+    private static IEnumerable<string> GetVariations(SearchDocument productDocument)
+    {
+        if (productDocument.TryGetValue("__variations", out var variationsObj) && variationsObj is object[] variationIds)
+        {
+            return variationIds.OfType<string>();
+        }
+
+        return Enumerable.Empty<string>();
     }
 
     private static SearchRequest GetInputProductSearchRequest(GetRecommendationsCriteria criteria, string prodcutId)

@@ -6,5 +6,7 @@ namespace VirtoCommerce.XRecommend.Core.Services;
 
 public interface IRecommendationsService
 {
+    string Model { set; get; }
+
     Task<IList<string>> GetRecommendationsAsync(GetRecommendationsCriteria criteria);
 }

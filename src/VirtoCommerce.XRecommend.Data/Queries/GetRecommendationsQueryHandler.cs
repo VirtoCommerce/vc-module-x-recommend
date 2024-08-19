@@ -15,27 +15,33 @@ namespace VirtoCommerce.XRecommend.Data.Queries;
 
 public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQuery, GetRecommendationsResult>
 {
-    private readonly IRecommendationsService _recommendService;
+    private readonly IEnumerable<IRecommendationsService> _recommendServices;
     private readonly IMediator _mediator;
 
-    public GetRecommendationsQueryHandler(IRecommendationsService recommendService, IMediator mediator)
+    public GetRecommendationsQueryHandler(IEnumerable<IRecommendationsService> recommendServices, IMediator mediator)
     {
-        _recommendService = recommendService;
+        _recommendServices = recommendServices;
         _mediator = mediator;
     }
 
     public virtual async Task<GetRecommendationsResult> Handle(GetRecommendationsQuery request, CancellationToken cancellationToken)
     {
-        var recommendationsCriteria = GetRelatedProductsCriteria(request);
-        var recommendedProductIds = await _recommendService.GetRecommendationsAsync(recommendationsCriteria);
+        var result = new GetRecommendationsResult();
 
-        var loadProductsQuery = GetLoadProductsQuery(request, recommendedProductIds);
-        var recommendedProducts = await _mediator.Send(loadProductsQuery, cancellationToken);
-
-        var result = new GetRecommendationsResult
+        var _recommendService = _recommendServices.FirstOrDefault(x => x.Model.EqualsInvariant(request.Model));
+        if (_recommendService != null)
         {
-            Products = recommendedProducts.Products.OrderBy(x => recommendedProductIds.IndexOf(x.Id)).ToList(),
-        };
+            var recommendationsCriteria = GetRelatedProductsCriteria(request);
+            var recommendedProductIds = await _recommendService.GetRecommendationsAsync(recommendationsCriteria);
+
+            var loadProductsQuery = GetLoadProductsQuery(request, recommendedProductIds);
+            var recommendedProducts = await _mediator.Send(loadProductsQuery, cancellationToken);
+
+            result = new GetRecommendationsResult
+            {
+                Products = recommendedProducts.Products.OrderBy(x => recommendedProductIds.IndexOf(x.Id)).ToList(),
+            };
+        }
 
         // add fallback products if needed
         if (!string.IsNullOrEmpty(request.FallbackProductsFilter) && request.MaxRecommendations > result.Products.Count)
