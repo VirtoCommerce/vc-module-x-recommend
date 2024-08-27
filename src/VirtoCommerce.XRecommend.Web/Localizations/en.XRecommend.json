@@ -4,5 +4,11 @@
     "XRecommend:read": "View XRecommend related data",
     "XRecommend:update": "Update XRecommend related data",
     "XRecommend:delete": "Delete XRecommend related data"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Recommendations Enabled",
+      "description": "Are product recommendations enabled for this store"
+    }
   }
 }
