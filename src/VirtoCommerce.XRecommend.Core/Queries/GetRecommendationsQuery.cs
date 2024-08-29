@@ -37,7 +37,7 @@ namespace VirtoCommerce.XRecommend.Core.Queries
 
             if (MaxRecommendations == 0)
             {
-                MaxRecommendations = 5;
+                MaxRecommendations = ModuleConstants.DefaultMaxRecommendations;
             }
         }
     }

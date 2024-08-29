@@ -65,22 +65,7 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
         // main product and variations (if exist) will probably be captured in the semantic query
         // try to remove them by setting take = MaxRecommendations + variations count + 1 (main product) and removing them from the result
         // until we can use 'must_not' filter in the search request
-        var excludedProductIds = new List<string> { criteria.ProductId };
-        excludedProductIds.AddRange(GetVariations(productDocument));
-
-        if (productDocument.TryGetValue("mainproductid", out var mainProductIdObj) && mainProductIdObj is string mainProductId && !string.IsNullOrEmpty(mainProductId))
-        {
-            // take main product and it's variations
-            productSearchRequest = GetInputProductSearchRequest(criteria, mainProductId);
-            productSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, productSearchRequest);
-            productDocument = productSearchResult.Documents.FirstOrDefault();
-
-            if (productDocument != null)
-            {
-                excludedProductIds.Add(productDocument.Id);
-                excludedProductIds.AddRange(GetVariations(productDocument));
-            }
-        }
+        var excludedProductIds = await GetExcludedProductIds(productDocument, criteria);
 
         // recommended products must be visible
         var recommendedProductsSearchRequest = GetRecommendedProductsSearchRequest(criteria, content, store.Catalog, criteria.MaxRecommendations + excludedProductIds.Count);
@@ -96,6 +81,28 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
         result = result.Take(criteria.MaxRecommendations).ToList();
 
         return result;
+    }
+
+    private async Task<List<string>> GetExcludedProductIds(SearchDocument productDocument, GetRecommendationsCriteria criteria)
+    {
+        var excludedProductIds = new List<string> { productDocument.Id };
+        excludedProductIds.AddRange(GetVariations(productDocument));
+
+        if (productDocument.TryGetValue("mainproductid", out var mainProductIdObj) && mainProductIdObj is string mainProductId && !string.IsNullOrEmpty(mainProductId))
+        {
+            // take main product and it's variations
+            var productSearchRequest = GetInputProductSearchRequest(criteria, mainProductId);
+            var productSearchResult = await _searchProvider.SearchAsync(KnownDocumentTypes.Product, productSearchRequest);
+            var mainProductDocument = productSearchResult.Documents.FirstOrDefault();
+
+            if (mainProductDocument != null)
+            {
+                excludedProductIds.Add(mainProductDocument.Id);
+                excludedProductIds.AddRange(GetVariations(mainProductDocument));
+            }
+        }
+
+        return excludedProductIds;
     }
 
     private static IEnumerable<string> GetVariations(SearchDocument productDocument)
