@@ -4,9 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core.Infrastructure;
 using VirtoCommerce.XCatalog.Core.Queries;
 using VirtoCommerce.XDigitalCatalog.Queries;
+using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Models;
 using VirtoCommerce.XRecommend.Core.Queries;
 using VirtoCommerce.XRecommend.Core.Services;
@@ -16,17 +19,28 @@ namespace VirtoCommerce.XRecommend.Data.Queries;
 public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQuery, GetRecommendationsResult>
 {
     private readonly IEnumerable<IRecommendationsService> _recommendServices;
+    private readonly IStoreService _storeService;
     private readonly IMediator _mediator;
 
-    public GetRecommendationsQueryHandler(IEnumerable<IRecommendationsService> recommendServices, IMediator mediator)
+    public GetRecommendationsQueryHandler(
+        IEnumerable<IRecommendationsService> recommendServices,
+        IStoreService storeService,
+        IMediator mediator)
     {
         _recommendServices = recommendServices;
+        _storeService = storeService;
         _mediator = mediator;
     }
 
     public virtual async Task<GetRecommendationsResult> Handle(GetRecommendationsQuery request, CancellationToken cancellationToken)
     {
         var result = new GetRecommendationsResult();
+
+        var store = await _storeService.GetNoCloneAsync(request.StoreId);
+        if (store == null || !store.Settings.GetValue<bool>(ModuleConstants.Settings.General.RecommendationsEnabled))
+        {
+            return result;
+        }
 
         var _recommendService = _recommendServices.FirstOrDefault(x => x.Model.EqualsInvariant(request.Model));
         if (_recommendService != null)
