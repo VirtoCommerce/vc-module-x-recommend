@@ -21,6 +21,8 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
 
     public string Model { get; set; } = "related-products";
 
+    private static readonly string[] StatusVisible = ["status:visible"];
+
     public RelatedProductsRecommendationsService(IStoreService storeService, ISearchProvider searchProvider, IConfiguration configuration)
     {
         _searchProvider = searchProvider;
@@ -136,7 +138,7 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             .WithSearchPhrase(content)
             .WithIncludeFields("_id");
 
-        builder.AddTerms(new[] { "status:visible" });
+        builder.AddTerms(StatusVisible);
         builder.AddTerms(new[] { $"__outline:{catalogId}" });
 
         return builder.Build();
