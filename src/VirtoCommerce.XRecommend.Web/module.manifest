@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>VirtoCommerce.XRecommend</id>
+  <version>3.800.0</version>
+  <version-tag></version-tag>
+
+  <platformVersion>3.841.0</platformVersion>
+  <dependencies>
+    <dependency id="VirtoCommerce.Xapi" version="3.800.0" />
+    <dependency id="VirtoCommerce.XCatalog" version="3.800.0" />
+  </dependencies>
+
+  <title>VirtoCommerce XRecommend module</title>
+  <description>VirtoCommerce XRecommend module</description>
+
+  <authors>
+    <author>Konstantin Savosteev</author>
+  </authors>
+  <owners>
+    <owner>VirtoCommerce</owner>
+  </owners>
+
+  <projectUrl>https://github.com/VirtoCommerce/vc-module-x-recommend</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.XRecommend)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+  <assemblyFile>VirtoCommerce.XRecommend.Web.dll</assemblyFile>
+  <moduleType>VirtoCommerce.XRecommend.Web.Module, VirtoCommerce.XRecommend.Web</moduleType>
+
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2024 VirtoCommerce. All rights reserved</copyright>
+  <tags>extension module</tags>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+</module>
