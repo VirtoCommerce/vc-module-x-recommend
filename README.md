@@ -1,46 +1,55 @@
-# XRecommend
+# Recommendations Module
+
+Recommendations Module adds an extendable query to VirtoCommerce Platform that lets you display recommendations.
 
 ## Overview
 
-Short overview of what the new module is.
+Recommendations Module adds XAPI product recommendations query to VirtoCommerce Platform GraphQL schema. The API provides a list of recommended products based on semantic similarities in product names and other searchable properties. The module is designed to be plug-and-play, integrating seamlessly with back-end and front-end to enhance the user experience by offering intelligent product recommendations.
 
-- What is the new or updated experience?
 
-- Does this module replace an existing module/experience? If yes, what is the transition plan?
+![image](./docs/media/recommendations_frontend.png)
 
-- Does this module has dependency on other ? If yes, list/explain the dependencies.
+![image](./docs/media/recommendations_setting.png)
 
-- List the key deployment scenarios - why would people use this module?
+## Requirements
 
-## Functional Requirements
+* [VirtoCommerce.Xapi](https://github.com/VirtoCommerce/vc-module-x-api) module version 3.800 or higher
+* [VirtoCommerce.XCatalog](https://github.com/VirtoCommerce/vc-module-x-catalog) module version 3.800 or higher
+* [VirtoCommerce.ElasticSearch8](https://github.com/VirtoCommerce/vc-module-elastic-search-8) module module version 3.805 or higher
+* **Semantic Search and ELSER Model** should be set up for Elastic Search 8 module. See: [Semantic Search and ELSER Model Setup](https://github.com/VirtoCommerce/vc-module-elastic-search-8?tab=readme-ov-file#semantic-search-and-elser-model-setup)
 
-Short description of the new module functional requirements.
+## Features
 
-## Scenarios
+* **Semantic Similarity**: Utilizes Elastic Search machine learning model to recommend products that are semantically similar to the given product. 
+* **Customizable**: Parameters such as the number of recommendations can be easily adjusted.
+* **Extendable**: You can extend the current `related-products` model or add your own custom recommendation algorithms.
+* **Easy Integration**: Provides a toggle setting to your store setting to enable or disable recommendations on your front-end app.
 
-List of scenarios that the new module implements
 
-1. [Scenario 1](/doc/scenario-name1.md)
-1. [Scenario 2](/doc/scenario-name2.md)
-1. [Scenario 3](/doc/scenario-name3.md)
-    1. [Scenario 3.1](/doc/scenario-name31.md)
-    1. [Scenario 3.2](/doc/scenario-name32.md)
-1. [Scenario 4](/doc/scenario-name4.md)
+## XAPI Specification
 
-## Web API
+### Query
 
-Web API documentation for each module is built out automatically and can be accessed by following the link bellow:
-<https://link-to-swager-api>
-
-## Database Model
-
-![DB model](./docs/media/diagram-db-model.png)
-
-## Related topics
-
-[Some Article1](some-article1.md)
-
-[Some Article2](some-article2.md)
+```js
+query {
+  recommendations(
+    storeId:"Electronics"
+    cultureName: "en-US"
+    model: "related-products"
+    productId: "Product-ID-12345"
+    currencyCode: "USD"
+    maxRecommendations: 5
+  )
+  {
+    products   
+    {
+      id
+      name
+      code  
+    }
+  }
+}
+```
 
 ## License
 
