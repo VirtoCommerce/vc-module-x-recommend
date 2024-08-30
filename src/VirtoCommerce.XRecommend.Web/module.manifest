@@ -10,8 +10,8 @@
     <dependency id="VirtoCommerce.XCatalog" version="3.800.0" />
   </dependencies>
 
-  <title>VirtoCommerce XRecommend module</title>
-  <description>VirtoCommerce XRecommend module</description>
+  <title>Product Recommendations</title>
+  <description>Recommendations encourage users to expand their search and browse more broadly. Users can jump to similar or complementary items if they don’t find a precise match.</description>
 
   <authors>
     <author>Konstantin Savosteev</author>
