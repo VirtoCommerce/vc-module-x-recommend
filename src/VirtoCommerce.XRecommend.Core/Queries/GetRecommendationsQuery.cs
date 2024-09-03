@@ -23,7 +23,7 @@ namespace VirtoCommerce.XRecommend.Core.Queries
             yield return Argument<StringGraphType>(nameof(ProductId), description: "Product ID");
             yield return Argument<StringGraphType>(nameof(Model), description: "Recommendation model");
             yield return Argument<StringGraphType>(nameof(FallbackProductsFilter), description: "Fallback filter");
-            yield return Argument<StringGraphType>(nameof(MaxRecommendations), description: "Max number of returned recommendations");
+            yield return Argument<IntGraphType>(nameof(MaxRecommendations), description: "Max number of returned recommendations");
         }
 
         public override void Map(IResolveFieldContext context)
