@@ -4,17 +4,17 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.PostgreSql;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<RecommendDbContext>
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<XRecommendDbContext>
 {
-    public RecommendDbContext CreateDbContext(string[] args)
+    public XRecommendDbContext CreateDbContext(string[] args)
     {
-        var builder = new DbContextOptionsBuilder<RecommendDbContext>();
+        var builder = new DbContextOptionsBuilder<XRecommendDbContext>();
         var connectionString = args.Any() ? args[0] : "Server=localhost;Username=virto;Password=virto;Database=VirtoCommerce3;";
 
         builder.UseNpgsql(
             connectionString,
             options => options.MigrationsAssembly(GetType().Assembly.GetName().Name));
 
-        return new RecommendDbContext(builder.Options);
+        return new XRecommendDbContext(builder.Options);
     }
 }

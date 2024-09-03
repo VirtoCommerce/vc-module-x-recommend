@@ -4,11 +4,11 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.MySql;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<RecommendDbContext>
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<XRecommendDbContext>
 {
-    public RecommendDbContext CreateDbContext(string[] args)
+    public XRecommendDbContext CreateDbContext(string[] args)
     {
-        var builder = new DbContextOptionsBuilder<RecommendDbContext>();
+        var builder = new DbContextOptionsBuilder<XRecommendDbContext>();
         var connectionString = args.Any() ? args[0] : "Server=localhost;User=virto;Password=virto;Database=VirtoCommerce3;";
 
         builder.UseMySql(
@@ -16,7 +16,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<RecommendD
             ResolveServerVersion(args, connectionString),
             options => options.MigrationsAssembly(GetType().Assembly.GetName().Name));
 
-        return new RecommendDbContext(builder.Options);
+        return new XRecommendDbContext(builder.Options);
     }
 
     private static ServerVersion ResolveServerVersion(string[] args, string connectionString)

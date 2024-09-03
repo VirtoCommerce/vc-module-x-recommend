@@ -1,12 +1,24 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.Platform.Core.Domain;
 using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.XRecommend.Data.Models;
 
 namespace VirtoCommerce.XRecommend.Data.Repositories
 {
-    public class RecommendRepository : DbContextRepositoryBase<RecommendDbContext>, IRecommendRepository
+    public class RecommendRepository : DbContextRepositoryBase<XRecommendDbContext>, IRecommendRepository
     {
-        public RecommendRepository(RecommendDbContext dbContext, IUnitOfWork unitOfWork = null) : base(dbContext, unitOfWork)
+        public RecommendRepository(XRecommendDbContext dbContext, IUnitOfWork unitOfWork = null) : base(dbContext, unitOfWork)
         {
+        }
+
+        public IQueryable<UserEventEntity> UserEvents => DbContext.Set<UserEventEntity>();
+
+        public async Task<IList<UserEventEntity>> GetUserEventsByIdsAsync(IList<string> ids, string responseGroup)
+        {
+            return await UserEvents.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
     }
 }

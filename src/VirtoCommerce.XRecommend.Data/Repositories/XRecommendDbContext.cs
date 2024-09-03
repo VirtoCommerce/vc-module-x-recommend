@@ -1,17 +1,18 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.XRecommend.Data.Models;
 
 namespace VirtoCommerce.XRecommend.Data.Repositories;
 
-public class RecommendDbContext : DbContextBase
+public class XRecommendDbContext : DbContextBase
 {
-    public RecommendDbContext(DbContextOptions<RecommendDbContext> options)
+    public XRecommendDbContext(DbContextOptions<XRecommendDbContext> options)
         : base(options)
     {
     }
 
-    protected RecommendDbContext(DbContextOptions options)
+    protected XRecommendDbContext(DbContextOptions options)
         : base(options)
     {
     }
@@ -20,8 +21,8 @@ public class RecommendDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        //modelBuilder.Entity<XRecommendEntity>().ToTable("XRecommend").HasKey(x => x.Id);
-        //modelBuilder.Entity<XRecommendEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+        modelBuilder.Entity<UserEventEntity>().ToTable("UserEvents").HasKey(x => x.Id);
+        modelBuilder.Entity<UserEventEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
 
         switch (Database.ProviderName)
         {
