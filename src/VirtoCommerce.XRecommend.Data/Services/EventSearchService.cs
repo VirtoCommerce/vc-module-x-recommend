@@ -13,18 +13,18 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.Services;
 
-public class UserEventSearchService : SearchService<UserEventSearchCriteria, UserEventSearchResult, UserEvent, UserEventEntity>, IUserEventSearchService
+public class EventSearchService : SearchService<EventSearchCriteria, UserEventSearchResult, UserEvent, UserEventEntity>, IEventSearchService
 {
-    public UserEventSearchService(
+    public EventSearchService(
         Func<IRecommendRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
-        IUserEventService crudService,
+        IEventService crudService,
         IOptions<CrudOptions> crudOptions)
         : base(repositoryFactory, platformMemoryCache, crudService, crudOptions)
     {
     }
 
-    protected override IQueryable<UserEventEntity> BuildQuery(IRepository repository, UserEventSearchCriteria criteria)
+    protected override IQueryable<UserEventEntity> BuildQuery(IRepository repository, EventSearchCriteria criteria)
     {
         var query = ((IRecommendRepository)repository).UserEvents;
 
@@ -38,11 +38,16 @@ public class UserEventSearchService : SearchService<UserEventSearchCriteria, Use
             query = query.Where(x => x.ProductId == criteria.ProductId);
         }
 
+        if (!string.IsNullOrEmpty(criteria.EventType))
+        {
+            query = query.Where(x => x.EventType == criteria.EventType);
+        }
+
         return query;
     }
 
 
-    protected override IList<SortInfo> BuildSortExpression(UserEventSearchCriteria criteria)
+    protected override IList<SortInfo> BuildSortExpression(EventSearchCriteria criteria)
     {
         var sortInfos = criteria.SortInfos;
 

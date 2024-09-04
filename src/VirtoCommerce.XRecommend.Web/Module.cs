@@ -54,8 +54,8 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<IRecommendRepository, RecommendRepository>();
         serviceCollection.AddTransient<Func<IRecommendRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IRecommendRepository>());
 
-        serviceCollection.AddTransient<IUserEventService, UserEventService>();
-        serviceCollection.AddTransient<IUserEventSearchService, UserEventSearchService>();
+        serviceCollection.AddTransient<IEventService, EventService>();
+        serviceCollection.AddTransient<IEventSearchService, EventSearchService>();
         serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
         serviceCollection.AddSingleton<IAuthorizationHandler, RecommendationsAuthorizationHandler>();
     }

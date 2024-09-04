@@ -3,6 +3,6 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Core.Services;
 
-public interface IUserEventService : ICrudService<UserEvent>
+public interface IEventSearchService : ISearchService<EventSearchCriteria, UserEventSearchResult, UserEvent>
 {
 }
