@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Services;
 using VirtoCommerce.XRecommend.Data;
+using VirtoCommerce.XRecommend.Data.Authorization;
 using VirtoCommerce.XRecommend.Data.MySql;
 using VirtoCommerce.XRecommend.Data.PostgreSql;
 using VirtoCommerce.XRecommend.Data.Repositories;
@@ -55,6 +57,7 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<IUserEventService, UserEventService>();
         serviceCollection.AddTransient<IUserEventSearchService, UserEventSearchService>();
         serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
+        serviceCollection.AddSingleton<IAuthorizationHandler, RecommendationsAuthorizationHandler>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

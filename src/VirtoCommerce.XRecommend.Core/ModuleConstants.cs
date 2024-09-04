@@ -6,6 +6,7 @@ namespace VirtoCommerce.XRecommend.Core;
 public static class ModuleConstants
 {
     public const int DefaultMaxRecommendations = 5;
+    public const int DefaultMaxProducts = 5;
 
     public static class Settings
     {

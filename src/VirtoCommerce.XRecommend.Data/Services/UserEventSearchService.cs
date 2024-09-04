@@ -50,7 +50,7 @@ public class UserEventSearchService : SearchService<UserEventSearchCriteria, Use
         {
             sortInfos =
             [
-                new SortInfo { SortColumn = nameof(UserEvent.CreatedDate), SortDirection = SortDirection.Descending },
+                new SortInfo { SortColumn = nameof(UserEvent.ModifiedDate), SortDirection = SortDirection.Descending },
             ];
         }
 
