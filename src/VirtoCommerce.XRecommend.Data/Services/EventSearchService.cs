@@ -13,7 +13,7 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.Services;
 
-public class EventSearchService : SearchService<EventSearchCriteria, UserEventSearchResult, UserEvent, UserEventEntity>, IEventSearchService
+public class EventSearchService : SearchService<EventSearchCriteria, EventSearchResult, Event, EventEntity>, IEventSearchService
 {
     public EventSearchService(
         Func<IRecommendRepository> repositoryFactory,
@@ -24,18 +24,23 @@ public class EventSearchService : SearchService<EventSearchCriteria, UserEventSe
     {
     }
 
-    protected override IQueryable<UserEventEntity> BuildQuery(IRepository repository, EventSearchCriteria criteria)
+    protected override IQueryable<EventEntity> BuildQuery(IRepository repository, EventSearchCriteria criteria)
     {
-        var query = ((IRecommendRepository)repository).UserEvents;
+        var query = ((IRecommendRepository)repository).Events;
+
+        if (!string.IsNullOrEmpty(criteria.ProductId))
+        {
+            query = query.Where(x => x.ProductId == criteria.ProductId);
+        }
 
         if (!string.IsNullOrEmpty(criteria.UserId))
         {
             query = query.Where(x => x.UserId == criteria.UserId);
         }
 
-        if (!string.IsNullOrEmpty(criteria.ProductId))
+        if (!string.IsNullOrEmpty(criteria.StoreId))
         {
-            query = query.Where(x => x.ProductId == criteria.ProductId);
+            query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
         if (!string.IsNullOrEmpty(criteria.EventType))
@@ -46,7 +51,6 @@ public class EventSearchService : SearchService<EventSearchCriteria, UserEventSe
         return query;
     }
 
-
     protected override IList<SortInfo> BuildSortExpression(EventSearchCriteria criteria)
     {
         var sortInfos = criteria.SortInfos;
@@ -55,7 +59,7 @@ public class EventSearchService : SearchService<EventSearchCriteria, UserEventSe
         {
             sortInfos =
             [
-                new SortInfo { SortColumn = nameof(UserEvent.ModifiedDate), SortDirection = SortDirection.Descending },
+                new SortInfo { SortColumn = nameof(Event.ModifiedDate), SortDirection = SortDirection.Descending },
             ];
         }
 

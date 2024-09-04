@@ -14,11 +14,11 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
         {
         }
 
-        public IQueryable<UserEventEntity> UserEvents => DbContext.Set<UserEventEntity>();
+        public IQueryable<EventEntity> Events => DbContext.Set<EventEntity>();
 
-        public async Task<IList<UserEventEntity>> GetUserEventsByIdsAsync(IList<string> ids, string responseGroup)
+        public virtual async Task<IList<EventEntity>> GetEventsByIdsAsync(IList<string> ids, string responseGroup)
         {
-            return await UserEvents.Where(x => ids.Contains(x.Id)).ToListAsync();
+            return await Events.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
     }
 }

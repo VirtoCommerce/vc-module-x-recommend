@@ -12,12 +12,13 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserEvents",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     ProductId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     UserId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     EventType = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -26,7 +27,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEvents", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
         }
 
@@ -34,7 +35,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserEvents");
+                name: "Events");
         }
     }
 }

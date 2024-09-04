@@ -22,7 +22,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.UserEventEntity", b =>
+            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.EventEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,13 +51,17 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
                     b.Property<string>("UserId")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEvents", (string)null);
+                    b.ToTable("Events", (string)null);
                 });
 #pragma warning restore 612, 618
         }

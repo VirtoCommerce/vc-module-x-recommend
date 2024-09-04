@@ -25,28 +25,30 @@ public class PushEventCommandHandler : IRequestHandler<PushEventCommand, bool>
     {
         var searchCriteria = new EventSearchCriteria
         {
-            UserId = request.UserId,
             ProductId = request.ProductId,
+            UserId = request.UserId,
+            StoreId = request.StoreId,
             EventType = request.EventType,
         };
 
         var eventSearchResult = await _eventSearchService.SearchAsync(searchCriteria);
 
-        var eventsToSave = new List<UserEvent>();
+        var eventsToSave = new List<Event>();
 
         if (eventSearchResult.Results.Count > 0)
         {
-            foreach (var userEvent in eventSearchResult.Results)
+            foreach (var trackedEvent in eventSearchResult.Results)
             {
-                userEvent.ModifiedDate = DateTime.UtcNow;
-                eventsToSave.Add(userEvent);
+                trackedEvent.ModifiedDate = DateTime.UtcNow;
+                eventsToSave.Add(trackedEvent);
             }
         }
         else
         {
-            var newEvent = AbstractTypeFactory<UserEvent>.TryCreateInstance();
+            var newEvent = AbstractTypeFactory<Event>.TryCreateInstance();
             newEvent.ProductId = request.ProductId;
             newEvent.UserId = request.UserId;
+            newEvent.StoreId = request.StoreId;
             newEvent.EventType = request.EventType;
 
             eventsToSave.Add(newEvent);

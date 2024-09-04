@@ -12,7 +12,7 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
 {
     [DbContext(typeof(XRecommendDbContext))]
-    [Migration("20240903160420_InitialMigration")]
+    [Migration("20240904114319_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.UserEventEntity", b =>
+            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.EventEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,13 +54,17 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<string>("StoreId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("UserId")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEvents", (string)null);
+                    b.ToTable("Events", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -12,22 +12,23 @@ using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Models;
 using VirtoCommerce.XRecommend.Core.Queries;
 using VirtoCommerce.XRecommend.Core.Services;
+using static VirtoCommerce.XRecommend.Core.ModuleConstants;
 
 namespace VirtoCommerce.XRecommend.Data.Queries;
 
 public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQuery, GetRecentlyBrowsedResult>
 {
     private readonly IStoreService _storeService;
-    private readonly IEventSearchService _userEventSearchService;
+    private readonly IEventSearchService _eventSearchService;
     private readonly IMediator _mediator;
 
     public GetRecentlyBrowsedQueryHandler(
         IStoreService storeService,
-        IEventSearchService userEventSearchService,
+        IEventSearchService eventSearchService,
         IMediator mediator)
     {
         _storeService = storeService;
-        _userEventSearchService = userEventSearchService;
+        _eventSearchService = eventSearchService;
         _mediator = mediator;
     }
 
@@ -41,9 +42,11 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             return result;
         }
 
-        var browsedProductsResult = await _userEventSearchService.SearchAsync(new EventSearchCriteria
+        var browsedProductsResult = await _eventSearchService.SearchAsync(new EventSearchCriteria
         {
             UserId = request.UserId,
+            StoreId = request.StoreId,
+            EventType = EventTypes.Click,
             Take = request.MaxProducts,
         });
 

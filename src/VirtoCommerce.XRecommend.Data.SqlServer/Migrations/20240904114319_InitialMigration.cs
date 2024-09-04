@@ -12,12 +12,13 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserEvents",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProductId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    StoreId = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     EventType = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -26,7 +27,7 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEvents", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
         }
 
@@ -34,7 +35,7 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserEvents");
+                name: "Events");
         }
     }
 }

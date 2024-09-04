@@ -5,7 +5,7 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Data.Models;
 
-public class UserEventEntity : AuditableEntity, IDataEntity<UserEventEntity, UserEvent>
+public class EventEntity : AuditableEntity, IDataEntity<EventEntity, Event>
 {
     [StringLength(128)]
     public string ProductId { get; set; }
@@ -14,9 +14,12 @@ public class UserEventEntity : AuditableEntity, IDataEntity<UserEventEntity, Use
     public string UserId { get; set; }
 
     [StringLength(128)]
+    public string StoreId { get; set; }
+
+    [StringLength(128)]
     public string EventType { get; set; }
 
-    public UserEvent ToModel(UserEvent model)
+    public Event ToModel(Event model)
     {
         model.Id = Id;
         model.CreatedBy = CreatedBy;
@@ -26,12 +29,13 @@ public class UserEventEntity : AuditableEntity, IDataEntity<UserEventEntity, Use
 
         model.ProductId = ProductId;
         model.UserId = UserId;
+        model.StoreId = StoreId;
         model.EventType = EventType;
 
         return model;
     }
 
-    public UserEventEntity FromModel(UserEvent model, PrimaryKeyResolvingMap pkMap)
+    public EventEntity FromModel(Event model, PrimaryKeyResolvingMap pkMap)
     {
         pkMap.AddPair(model, this);
 
@@ -43,15 +47,17 @@ public class UserEventEntity : AuditableEntity, IDataEntity<UserEventEntity, Use
 
         ProductId = model.ProductId;
         UserId = model.UserId;
+        StoreId = model.StoreId;
         EventType = model.EventType;
 
         return this;
     }
 
-    public void Patch(UserEventEntity target)
+    public void Patch(EventEntity target)
     {
         target.ProductId = ProductId;
         target.UserId = UserId;
+        target.StoreId = StoreId;
         target.EventType = EventType;
     }
 }

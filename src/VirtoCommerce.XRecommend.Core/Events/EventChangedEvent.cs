@@ -4,9 +4,9 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Core.Events;
 
-public class EventChangedEvent : GenericChangedEntryEvent<UserEvent>
+public class EventChangedEvent : GenericChangedEntryEvent<Event>
 {
-    public EventChangedEvent(IEnumerable<GenericChangedEntry<UserEvent>> changedEntries) : base(changedEntries)
+    public EventChangedEvent(IEnumerable<GenericChangedEntry<Event>> changedEntries) : base(changedEntries)
     {
     }
 }

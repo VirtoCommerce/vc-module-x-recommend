@@ -15,7 +15,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "UserEvents",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
@@ -23,6 +23,8 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                     ProductId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StoreId = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     EventType = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -35,7 +37,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEvents", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -44,7 +46,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserEvents");
+                name: "Events");
         }
     }
 }
