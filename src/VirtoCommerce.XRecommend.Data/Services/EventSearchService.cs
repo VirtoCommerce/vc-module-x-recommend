@@ -13,7 +13,7 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.Services;
 
-public class EventSearchService : SearchService<EventSearchCriteria, EventSearchResult, Event, EventEntity>, IEventSearchService
+public class EventSearchService : SearchService<EventSearchCriteria, EventSearchResult, HistoricalEvent, HistoricalEventEntity>, IEventSearchService
 {
     public EventSearchService(
         Func<IRecommendRepository> repositoryFactory,
@@ -24,7 +24,7 @@ public class EventSearchService : SearchService<EventSearchCriteria, EventSearch
     {
     }
 
-    protected override IQueryable<EventEntity> BuildQuery(IRepository repository, EventSearchCriteria criteria)
+    protected override IQueryable<HistoricalEventEntity> BuildQuery(IRepository repository, EventSearchCriteria criteria)
     {
         var query = ((IRecommendRepository)repository).Events;
 
@@ -59,7 +59,7 @@ public class EventSearchService : SearchService<EventSearchCriteria, EventSearch
         {
             sortInfos =
             [
-                new SortInfo { SortColumn = nameof(Event.ModifiedDate), SortDirection = SortDirection.Descending },
+                new SortInfo { SortColumn = nameof(HistoricalEvent.ModifiedDate), SortDirection = SortDirection.Descending },
             ];
         }
 

@@ -21,8 +21,8 @@ public class XRecommendDbContext : DbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<EventEntity>().ToTable("Events").HasKey(x => x.Id);
-        modelBuilder.Entity<EventEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
+        modelBuilder.Entity<HistoricalEventEntity>().ToTable("HistoricalEvents").HasKey(x => x.Id);
+        modelBuilder.Entity<HistoricalEventEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
 
         switch (Database.ProviderName)
         {

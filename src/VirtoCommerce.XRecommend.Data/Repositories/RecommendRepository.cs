@@ -14,9 +14,9 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
         {
         }
 
-        public IQueryable<EventEntity> Events => DbContext.Set<EventEntity>();
+        public IQueryable<HistoricalEventEntity> Events => DbContext.Set<HistoricalEventEntity>();
 
-        public virtual async Task<IList<EventEntity>> GetEventsByIdsAsync(IList<string> ids, string responseGroup)
+        public virtual async Task<IList<HistoricalEventEntity>> GetEventsByIdsAsync(IList<string> ids, string responseGroup)
         {
             return await Events.Where(x => ids.Contains(x.Id)).ToListAsync();
         }

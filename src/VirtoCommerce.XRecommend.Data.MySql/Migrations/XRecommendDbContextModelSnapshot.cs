@@ -22,7 +22,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.EventEntity", b =>
+            modelBuilder.Entity("VirtoCommerce.XRecommend.Data.Models.HistoricalEventEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("HistoricalEvents", (string)null);
                 });
 #pragma warning restore 612, 618
         }

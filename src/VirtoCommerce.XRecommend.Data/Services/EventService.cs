@@ -13,7 +13,7 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.Services;
 
-public class EventService : CrudService<Event, EventEntity, EventChangingEvent, EventChangedEvent>, IEventService
+public class EventService : CrudService<HistoricalEvent, HistoricalEventEntity, EventChangingEvent, EventChangedEvent>, IEventService
 {
     public EventService(
         Func<IRecommendRepository> repositoryFactory,
@@ -23,7 +23,7 @@ public class EventService : CrudService<Event, EventEntity, EventChangingEvent, 
     {
     }
 
-    protected override Task<IList<EventEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
+    protected override Task<IList<HistoricalEventEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
         return ((IRecommendRepository)repository).GetEventsByIdsAsync(ids, responseGroup);
     }

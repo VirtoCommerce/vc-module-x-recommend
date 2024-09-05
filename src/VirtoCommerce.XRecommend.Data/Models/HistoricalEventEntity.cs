@@ -5,7 +5,7 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Data.Models;
 
-public class EventEntity : AuditableEntity, IDataEntity<EventEntity, Event>
+public class HistoricalEventEntity : AuditableEntity, IDataEntity<HistoricalEventEntity, HistoricalEvent>
 {
     [StringLength(128)]
     public string ProductId { get; set; }
@@ -19,7 +19,7 @@ public class EventEntity : AuditableEntity, IDataEntity<EventEntity, Event>
     [StringLength(128)]
     public string EventType { get; set; }
 
-    public Event ToModel(Event model)
+    public HistoricalEvent ToModel(HistoricalEvent model)
     {
         model.Id = Id;
         model.CreatedBy = CreatedBy;
@@ -35,7 +35,7 @@ public class EventEntity : AuditableEntity, IDataEntity<EventEntity, Event>
         return model;
     }
 
-    public EventEntity FromModel(Event model, PrimaryKeyResolvingMap pkMap)
+    public HistoricalEventEntity FromModel(HistoricalEvent model, PrimaryKeyResolvingMap pkMap)
     {
         pkMap.AddPair(model, this);
 
@@ -53,7 +53,7 @@ public class EventEntity : AuditableEntity, IDataEntity<EventEntity, Event>
         return this;
     }
 
-    public void Patch(EventEntity target)
+    public void Patch(HistoricalEventEntity target)
     {
         target.ProductId = ProductId;
         target.UserId = UserId;

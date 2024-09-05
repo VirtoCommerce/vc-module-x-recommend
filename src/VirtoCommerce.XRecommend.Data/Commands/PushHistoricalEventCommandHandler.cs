@@ -10,18 +10,18 @@ using VirtoCommerce.XRecommend.Core.Services;
 
 namespace VirtoCommerce.XRecommend.Data.Commands;
 
-public class PushEventCommandHandler : IRequestHandler<PushEventCommand, bool>
+public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalEventCommand, bool>
 {
     private readonly IEventService _eventService;
     private readonly IEventSearchService _eventSearchService;
 
-    public PushEventCommandHandler(IEventService eventService, IEventSearchService eventSearchService)
+    public PushHistoricalEventCommandHandler(IEventService eventService, IEventSearchService eventSearchService)
     {
         _eventService = eventService;
         _eventSearchService = eventSearchService;
     }
 
-    public async Task<bool> Handle(PushEventCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(PushHistoricalEventCommand request, CancellationToken cancellationToken)
     {
         var searchCriteria = new EventSearchCriteria
         {
@@ -33,7 +33,7 @@ public class PushEventCommandHandler : IRequestHandler<PushEventCommand, bool>
 
         var eventSearchResult = await _eventSearchService.SearchAsync(searchCriteria);
 
-        var eventsToSave = new List<Event>();
+        var eventsToSave = new List<HistoricalEvent>();
 
         if (eventSearchResult.Results.Count > 0)
         {
@@ -45,7 +45,7 @@ public class PushEventCommandHandler : IRequestHandler<PushEventCommand, bool>
         }
         else
         {
-            var newEvent = AbstractTypeFactory<Event>.TryCreateInstance();
+            var newEvent = AbstractTypeFactory<HistoricalEvent>.TryCreateInstance();
             newEvent.ProductId = request.ProductId;
             newEvent.UserId = request.UserId;
             newEvent.StoreId = request.StoreId;

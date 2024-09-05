@@ -15,7 +15,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Events",
+                name: "HistoricalEvents",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
@@ -37,7 +37,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_HistoricalEvents", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -46,7 +46,7 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "HistoricalEvents");
         }
     }
 }

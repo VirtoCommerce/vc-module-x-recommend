@@ -8,8 +8,8 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
 {
     public interface IRecommendRepository : IRepository
     {
-        public IQueryable<EventEntity> Events { get; }
+        public IQueryable<HistoricalEventEntity> Events { get; }
 
-        public Task<IList<EventEntity>> GetEventsByIdsAsync(IList<string> ids, string responseGroup);
+        public Task<IList<HistoricalEventEntity>> GetEventsByIdsAsync(IList<string> ids, string responseGroup);
     }
 }

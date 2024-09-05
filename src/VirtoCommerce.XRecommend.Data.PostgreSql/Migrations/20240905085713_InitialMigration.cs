@@ -12,7 +12,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Events",
+                name: "HistoricalEvents",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
@@ -27,7 +27,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.PrimaryKey("PK_HistoricalEvents", x => x.Id);
                 });
         }
 
@@ -35,7 +35,7 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "HistoricalEvents");
         }
     }
 }

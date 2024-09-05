@@ -3,7 +3,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.XRecommend.Core.Models;
 
-public class Event : AuditableEntity, ICloneable
+public class HistoricalEvent : AuditableEntity, ICloneable
 {
     public string ProductId { get; set; }
 

@@ -2,7 +2,7 @@ using VirtoCommerce.Xapi.Core.Infrastructure;
 
 namespace VirtoCommerce.XRecommend.Core.Commands;
 
-public class PushEventCommand : ICommand<bool>
+public class PushHistoricalEventCommand : ICommand<bool>
 {
     public string StoreId { get; set; }
 

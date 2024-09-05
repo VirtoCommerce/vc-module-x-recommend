@@ -11,16 +11,16 @@ using VirtoCommerce.XRecommend.Data.Authorization;
 
 namespace VirtoCommerce.XRecommend.Data.Commands;
 
-public class PushEventCommandBuilder : CommandBuilder<PushEventCommand, bool, InputPushEventType, BooleanGraphType>
+public class PushHistoricalEventCommandBuilder : CommandBuilder<PushHistoricalEventCommand, bool, InputPushEventType, BooleanGraphType>
 {
-    protected override string Name => "pushEvent";
+    protected override string Name => "pushHistoricalEvent";
 
-    public PushEventCommandBuilder(IMediator mediator, IAuthorizationService authorizationService)
+    public PushHistoricalEventCommandBuilder(IMediator mediator, IAuthorizationService authorizationService)
         : base(mediator, authorizationService)
     {
     }
 
-    protected override async Task BeforeMediatorSend(IResolveFieldContext<object> context, PushEventCommand request)
+    protected override async Task BeforeMediatorSend(IResolveFieldContext<object> context, PushHistoricalEventCommand request)
     {
         await Authorize(context, null, new RecommendationsAuthorizationRequirement());
 
