@@ -52,5 +52,4 @@ public static class ModuleConstants
             }
         }
     }
-
 }

@@ -59,4 +59,3 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
         return true;
     }
 }
-

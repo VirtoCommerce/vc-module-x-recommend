@@ -1,4 +1,4 @@
-﻿using GraphQL.Types;
+using GraphQL.Types;
 using VirtoCommerce.XCatalog.Core.Schemas;
 using VirtoCommerce.XRecommend.Core.Models;
 

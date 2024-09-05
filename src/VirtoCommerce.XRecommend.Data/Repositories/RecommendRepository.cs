@@ -10,7 +10,8 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
 {
     public class RecommendRepository : DbContextRepositoryBase<XRecommendDbContext>, IRecommendRepository
     {
-        public RecommendRepository(XRecommendDbContext dbContext, IUnitOfWork unitOfWork = null) : base(dbContext, unitOfWork)
+        public RecommendRepository(XRecommendDbContext dbContext, IUnitOfWork unitOfWork = null)
+            : base(dbContext, unitOfWork)
         {
         }
 

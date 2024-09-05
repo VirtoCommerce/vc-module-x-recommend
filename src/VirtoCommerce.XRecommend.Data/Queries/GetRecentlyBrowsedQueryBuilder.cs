@@ -14,7 +14,11 @@ namespace VirtoCommerce.XRecommend.Data.Queries;
 
 public class GetRecentlyBrowsedQueryBuilder : CatalogQueryBuilder<GetRecentlyBrowsedQuery, GetRecentlyBrowsedResult, GetRecentlyBrowsedResponseType>
 {
-    public GetRecentlyBrowsedQueryBuilder(IMediator mediator, IAuthorizationService authorizationService, IStoreService storeService, ICurrencyService currencyService)
+    public GetRecentlyBrowsedQueryBuilder(
+        IMediator mediator,
+        IAuthorizationService authorizationService,
+        IStoreService storeService,
+        ICurrencyService currencyService)
         : base(mediator, authorizationService, storeService, currencyService)
     {
     }
@@ -28,4 +32,3 @@ public class GetRecentlyBrowsedQueryBuilder : CatalogQueryBuilder<GetRecentlyBro
         await base.BeforeMediatorSend(context, request);
     }
 }
-
