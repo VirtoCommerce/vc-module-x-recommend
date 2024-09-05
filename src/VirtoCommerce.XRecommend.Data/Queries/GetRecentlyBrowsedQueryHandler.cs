@@ -12,7 +12,6 @@ using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Models;
 using VirtoCommerce.XRecommend.Core.Queries;
 using VirtoCommerce.XRecommend.Core.Services;
-using static VirtoCommerce.XRecommend.Core.ModuleConstants;
 
 namespace VirtoCommerce.XRecommend.Data.Queries;
 
@@ -42,13 +41,13 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             return result;
         }
 
-        var searchResult = await _eventSearchService.SearchAsync(new HistoricalEventSearchCriteria
-        {
-            UserId = request.UserId,
-            StoreId = request.StoreId,
-            EventType = EventTypes.Click,
-            Take = request.MaxProducts,
-        });
+        var searchCriteria = AbstractTypeFactory<HistoricalEventSearchCriteria>.TryCreateInstance();
+        searchCriteria.UserId = request.UserId;
+        searchCriteria.StoreId = request.StoreId;
+        searchCriteria.EventType = ModuleConstants.EventTypes.Click;
+        searchCriteria.Take = request.MaxProducts;
+
+        var searchResult = await _eventSearchService.SearchAsync(searchCriteria);
 
         var productIds = searchResult.Results.Select(x => x.ProductId).ToList();
 

@@ -23,13 +23,11 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
 
     public async Task<bool> Handle(PushHistoricalEventCommand request, CancellationToken cancellationToken)
     {
-        var searchCriteria = new HistoricalEventSearchCriteria
-        {
-            ProductId = request.ProductId,
-            UserId = request.UserId,
-            StoreId = request.StoreId,
-            EventType = request.EventType,
-        };
+        var searchCriteria = AbstractTypeFactory<HistoricalEventSearchCriteria>.TryCreateInstance();
+        searchCriteria.ProductId = request.ProductId;
+        searchCriteria.UserId = request.UserId;
+        searchCriteria.StoreId = request.StoreId;
+        searchCriteria.EventType = request.EventType;
 
         var eventSearchResult = await _eventSearchService.SearchAsync(searchCriteria);
 
