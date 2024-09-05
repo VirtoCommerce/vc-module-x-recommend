@@ -25,6 +25,6 @@ public class HistoricalEventService : CrudService<HistoricalEvent, HistoricalEve
 
     protected override Task<IList<HistoricalEventEntity>> LoadEntities(IRepository repository, IList<string> ids, string responseGroup)
     {
-        return ((IRecommendRepository)repository).GetEventsByIdsAsync(ids, responseGroup);
+        return ((IRecommendRepository)repository).GetHistoricalEventsByIdsAsync(ids, responseGroup);
     }
 }

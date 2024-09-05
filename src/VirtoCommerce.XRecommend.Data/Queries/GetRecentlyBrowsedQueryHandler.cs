@@ -42,7 +42,7 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             return result;
         }
 
-        var browsedProductsResult = await _eventSearchService.SearchAsync(new HistoricalEventSearchCriteria
+        var searchResult = await _eventSearchService.SearchAsync(new HistoricalEventSearchCriteria
         {
             UserId = request.UserId,
             StoreId = request.StoreId,
@@ -50,25 +50,22 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             Take = request.MaxProducts,
         });
 
-        var browsedProductsIds = browsedProductsResult.Results.Select(x => x.ProductId).ToList();
+        var productIds = searchResult.Results.Select(x => x.ProductId).ToList();
 
-        var loadProductsQuery = GetLoadProductsQuery(request, browsedProductsIds);
-        var browsedProducts = await _mediator.Send(loadProductsQuery, cancellationToken);
+        var loadProductsQuery = GetLoadProductsQuery(request, productIds);
+        var loadProductResponse = await _mediator.Send(loadProductsQuery, cancellationToken);
 
-        result = new GetRecentlyBrowsedResult
-        {
-            Products = browsedProducts.Products.OrderBy(x => browsedProductsIds.IndexOf(x.Id)).ToList(),
-        };
+        result.Products = loadProductResponse.Products.OrderBy(x => productIds.IndexOf(x.Id)).ToList();
 
         return result;
     }
 
-    private static LoadProductsQuery GetLoadProductsQuery(GetRecentlyBrowsedQuery request, IList<string> browsedProductsIds)
+    private static LoadProductsQuery GetLoadProductsQuery(GetRecentlyBrowsedQuery request, IList<string> productIds)
     {
         return new LoadProductsQuery
         {
             StoreId = request.StoreId,
-            ObjectIds = browsedProductsIds,
+            ObjectIds = productIds,
             CultureName = request.CultureName,
             CurrencyCode = request.CurrencyCode,
             UserId = request.UserId,

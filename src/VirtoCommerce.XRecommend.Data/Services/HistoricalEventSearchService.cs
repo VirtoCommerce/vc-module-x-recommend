@@ -26,7 +26,7 @@ public class HistoricalEventSearchService : SearchService<HistoricalEventSearchC
 
     protected override IQueryable<HistoricalEventEntity> BuildQuery(IRepository repository, HistoricalEventSearchCriteria criteria)
     {
-        var query = ((IRecommendRepository)repository).Events;
+        var query = ((IRecommendRepository)repository).HistoricalEvents;
 
         if (!string.IsNullOrEmpty(criteria.ProductId))
         {
