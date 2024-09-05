@@ -9,7 +9,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<XRecommend
     public XRecommendDbContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<XRecommendDbContext>();
-        var connectionString = args.Any() ? args[0] : "Server=localhost;User=virto;Password=virto;Database=VirtoCommerce3;";
+        var connectionString = args.Length != 0 ? args[0] : "Server=localhost;User=virto;Password=virto;Database=VirtoCommerce3;";
 
         builder.UseMySql(
             connectionString,
