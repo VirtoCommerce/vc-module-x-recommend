@@ -29,13 +29,13 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
         searchCriteria.StoreId = request.StoreId;
         searchCriteria.EventType = request.EventType;
 
-        var eventSearchResult = await _eventSearchService.SearchAsync(searchCriteria);
+        var searchResult = await _eventSearchService.SearchAsync(searchCriteria);
 
         var eventsToSave = new List<HistoricalEvent>();
 
-        if (eventSearchResult.Results.Count > 0)
+        if (searchResult.Results.Count > 0)
         {
-            foreach (var trackedEvent in eventSearchResult.Results)
+            foreach (var trackedEvent in searchResult.Results)
             {
                 trackedEvent.ModifiedDate = DateTime.UtcNow;
                 eventsToSave.Add(trackedEvent);
