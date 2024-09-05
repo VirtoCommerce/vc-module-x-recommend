@@ -12,10 +12,10 @@ namespace VirtoCommerce.XRecommend.Data.Commands;
 
 public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalEventCommand, bool>
 {
-    private readonly IEventService _eventService;
-    private readonly IEventSearchService _eventSearchService;
+    private readonly IHistoricalEventService _eventService;
+    private readonly IHistoricalEventSearchService _eventSearchService;
 
-    public PushHistoricalEventCommandHandler(IEventService eventService, IEventSearchService eventSearchService)
+    public PushHistoricalEventCommandHandler(IHistoricalEventService eventService, IHistoricalEventSearchService eventSearchService)
     {
         _eventService = eventService;
         _eventSearchService = eventSearchService;
@@ -23,7 +23,7 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
 
     public async Task<bool> Handle(PushHistoricalEventCommand request, CancellationToken cancellationToken)
     {
-        var searchCriteria = new EventSearchCriteria
+        var searchCriteria = new HistoricalEventSearchCriteria
         {
             ProductId = request.ProductId,
             UserId = request.UserId,

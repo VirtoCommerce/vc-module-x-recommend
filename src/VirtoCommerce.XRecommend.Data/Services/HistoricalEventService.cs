@@ -13,9 +13,9 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 
 namespace VirtoCommerce.XRecommend.Data.Services;
 
-public class EventService : CrudService<HistoricalEvent, HistoricalEventEntity, EventChangingEvent, EventChangedEvent>, IEventService
+public class HistoricalEventService : CrudService<HistoricalEvent, HistoricalEventEntity, HistoricalEventChangingEvent, HistoricalEventChangedEvent>, IHistoricalEventService
 {
-    public EventService(
+    public HistoricalEventService(
         Func<IRecommendRepository> repositoryFactory,
         IPlatformMemoryCache platformMemoryCache,
         IEventPublisher eventPublisher)

@@ -3,6 +3,6 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Core.Services;
 
-public interface IEventService : ICrudService<HistoricalEvent>
+public interface IHistoricalEventService : ICrudService<HistoricalEvent>
 {
 }

@@ -3,6 +3,6 @@ using VirtoCommerce.XRecommend.Core.Models;
 
 namespace VirtoCommerce.XRecommend.Core.Services;
 
-public interface IEventSearchService : ISearchService<EventSearchCriteria, EventSearchResult, HistoricalEvent>
+public interface IHistoricalEventSearchService : ISearchService<HistoricalEventSearchCriteria, HistoricalEventSearchResult, HistoricalEvent>
 {
 }

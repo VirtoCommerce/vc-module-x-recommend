@@ -11,7 +11,7 @@ using VirtoCommerce.XRecommend.Data.Authorization;
 
 namespace VirtoCommerce.XRecommend.Data.Commands;
 
-public class PushHistoricalEventCommandBuilder : CommandBuilder<PushHistoricalEventCommand, bool, InputPushEventType, BooleanGraphType>
+public class PushHistoricalEventCommandBuilder : CommandBuilder<PushHistoricalEventCommand, bool, InputPushHistoricalEventType, BooleanGraphType>
 {
     protected override string Name => "pushHistoricalEvent";
 

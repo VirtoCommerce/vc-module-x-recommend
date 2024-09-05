@@ -19,12 +19,12 @@ namespace VirtoCommerce.XRecommend.Data.Queries;
 public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQuery, GetRecentlyBrowsedResult>
 {
     private readonly IStoreService _storeService;
-    private readonly IEventSearchService _eventSearchService;
+    private readonly IHistoricalEventSearchService _eventSearchService;
     private readonly IMediator _mediator;
 
     public GetRecentlyBrowsedQueryHandler(
         IStoreService storeService,
-        IEventSearchService eventSearchService,
+        IHistoricalEventSearchService eventSearchService,
         IMediator mediator)
     {
         _storeService = storeService;
@@ -42,7 +42,7 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             return result;
         }
 
-        var browsedProductsResult = await _eventSearchService.SearchAsync(new EventSearchCriteria
+        var browsedProductsResult = await _eventSearchService.SearchAsync(new HistoricalEventSearchCriteria
         {
             UserId = request.UserId,
             StoreId = request.StoreId,

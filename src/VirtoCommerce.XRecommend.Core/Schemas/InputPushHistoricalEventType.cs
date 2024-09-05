@@ -2,9 +2,9 @@ using GraphQL.Types;
 
 namespace VirtoCommerce.XRecommend.Core.Schemas;
 
-public class InputPushEventType : InputObjectGraphType
+public class InputPushHistoricalEventType : InputObjectGraphType
 {
-    public InputPushEventType()
+    public InputPushHistoricalEventType()
     {
         Field<StringGraphType>("storeId");
         Field<StringGraphType>("productId");
