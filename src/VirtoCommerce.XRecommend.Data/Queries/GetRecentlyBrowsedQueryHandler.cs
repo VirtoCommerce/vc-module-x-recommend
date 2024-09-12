@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,6 +21,8 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
     private readonly IStoreService _storeService;
     private readonly IHistoricalEventSearchService _eventSearchService;
     private readonly IMediator _mediator;
+
+    private const string _productsFieldName = $"{nameof(GetRecentlyBrowsedResult.Products)}.";
 
     public GetRecentlyBrowsedQueryHandler(
         IStoreService storeService,
@@ -61,6 +64,11 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
 
     private static LoadProductsQuery GetLoadProductsQuery(GetRecentlyBrowsedQuery request, IList<string> productIds)
     {
+        var includeFields = request.IncludeFields
+            .Where(x => x.StartsWith(_productsFieldName, StringComparison.OrdinalIgnoreCase))
+            .Select(x => x.Replace(_productsFieldName, string.Empty, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
         return new LoadProductsQuery
         {
             StoreId = request.StoreId,
@@ -69,7 +77,7 @@ public class GetRecentlyBrowsedQueryHandler : IQueryHandler<GetRecentlyBrowsedQu
             CurrencyCode = request.CurrencyCode,
             UserId = request.UserId,
             OrganizationId = request.OrganizationId,
-            IncludeFields = request.IncludeFields,
+            IncludeFields = includeFields,
         };
     }
 }
