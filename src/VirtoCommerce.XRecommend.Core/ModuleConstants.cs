@@ -6,6 +6,12 @@ namespace VirtoCommerce.XRecommend.Core;
 public static class ModuleConstants
 {
     public const int DefaultMaxRecommendations = 5;
+    public const int DefaultMaxProducts = 5;
+
+    public static class EventTypes
+    {
+        public const string Click = "click";
+    }
 
     public static class Settings
     {
@@ -46,5 +52,4 @@ public static class ModuleConstants
             }
         }
     }
-
 }

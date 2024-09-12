@@ -9,6 +9,9 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.XRecommend.Core\VirtoCommerce.XRecommend.Core.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.XRecommend.Data.MySql\VirtoCommerce.XRecommend.Data.MySql.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.XRecommend.Data.PostgreSql\VirtoCommerce.XRecommend.Data.PostgreSql.csproj" />
+    <ProjectReference Include="..\VirtoCommerce.XRecommend.Data.SqlServer\VirtoCommerce.XRecommend.Data.SqlServer.csproj" />
     <ProjectReference Include="..\VirtoCommerce.XRecommend.Data\VirtoCommerce.XRecommend.Data.csproj" />
   </ItemGroup>
 </Project>
