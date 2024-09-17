@@ -8,6 +8,7 @@ public class InputPushHistoricalEventType : InputObjectGraphType
     {
         Field<StringGraphType>("storeId");
         Field<StringGraphType>("productId");
+        Field<StringGraphType>("sessionId");
         Field<StringGraphType>("eventType");
     }
 }

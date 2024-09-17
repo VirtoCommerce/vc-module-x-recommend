@@ -47,6 +47,7 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
             newEvent.ProductId = request.ProductId;
             newEvent.UserId = request.UserId;
             newEvent.StoreId = request.StoreId;
+            newEvent.SessionId = request.SessionId;
             newEvent.EventType = request.EventType;
 
             eventsToSave.Add(newEvent);

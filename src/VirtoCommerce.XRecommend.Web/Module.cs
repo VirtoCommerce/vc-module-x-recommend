@@ -31,10 +31,9 @@ public class Module : IModule, IHasConfiguration
         var graphQLBuilder = new CustomGraphQLBuilder(serviceCollection);
         graphQLBuilder.AddSchema(typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
 
-
+        var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
         serviceCollection.AddDbContext<XRecommendDbContext>(options =>
         {
-            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
             var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ?? Configuration.GetConnectionString("VirtoCommerce");
 
             switch (databaseProvider)
@@ -51,12 +50,26 @@ public class Module : IModule, IHasConfiguration
             }
         });
 
+        switch (databaseProvider)
+        {
+            case "MySql":
+                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, MySqlRecommendRawDatabaseCommand>();
+                break;
+            case "PostgreSql":
+                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, PostgreSqlRecommendRawDatabaseCommand>();
+                break;
+            default:
+                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, SqlServerRecommendRawDatabaseCommand>();
+                break;
+        }
+
         serviceCollection.AddTransient<IRecommendRepository, RecommendRepository>();
         serviceCollection.AddTransient<Func<IRecommendRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IRecommendRepository>());
 
         serviceCollection.AddTransient<IHistoricalEventService, HistoricalEventService>();
         serviceCollection.AddTransient<IHistoricalEventSearchService, HistoricalEventSearchService>();
         serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
+        serviceCollection.AddTransient<IRecommendationsService, BoughtTogetherRecommendationsService>();
         serviceCollection.AddSingleton<IAuthorizationHandler, RecommendationsAuthorizationHandler>();
     }
 

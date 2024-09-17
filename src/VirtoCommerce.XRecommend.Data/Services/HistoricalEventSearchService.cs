@@ -43,6 +43,11 @@ public class HistoricalEventSearchService : SearchService<HistoricalEventSearchC
             query = query.Where(x => x.StoreId == criteria.StoreId);
         }
 
+        if (!string.IsNullOrEmpty(criteria.SessionId))
+        {
+            query = query.Where(x => x.SessionId == criteria.SessionId);
+        }
+
         if (!string.IsNullOrEmpty(criteria.EventType))
         {
             query = query.Where(x => x.EventType == criteria.EventType);

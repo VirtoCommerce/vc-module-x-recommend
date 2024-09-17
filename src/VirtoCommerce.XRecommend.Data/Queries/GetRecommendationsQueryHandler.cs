@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,6 +22,8 @@ public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQu
     private readonly IEnumerable<IRecommendationsService> _recommendServices;
     private readonly IStoreService _storeService;
     private readonly IMediator _mediator;
+
+    private const string _productsFieldName = $"{nameof(GetRecommendationsResult.Products)}.";
 
     public GetRecommendationsQueryHandler(
         IEnumerable<IRecommendationsService> recommendServices,
@@ -75,11 +78,17 @@ public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQu
             StoreId = request.StoreId,
             MaxRecommendations = request.MaxRecommendations,
             ProductId = request.ProductId,
+            UserId = request.UserId,
         };
     }
 
     private static LoadProductsQuery GetLoadProductsQuery(GetRecommendationsQuery request, IList<string> recommendedProductIds)
     {
+        var includeFields = request.IncludeFields
+            .Where(x => x.StartsWith(_productsFieldName, StringComparison.OrdinalIgnoreCase))
+            .Select(x => x.Replace(_productsFieldName, string.Empty, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
         return new LoadProductsQuery
         {
             StoreId = request.StoreId,
@@ -88,7 +97,7 @@ public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQu
             CurrencyCode = request.CurrencyCode,
             UserId = request.UserId,
             OrganizationId = request.OrganizationId,
-            IncludeFields = request.IncludeFields,
+            IncludeFields = includeFields,
         };
     }
 

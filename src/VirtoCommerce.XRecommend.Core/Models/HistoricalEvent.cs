@@ -11,6 +11,8 @@ public class HistoricalEvent : AuditableEntity, ICloneable
 
     public string StoreId { get; set; }
 
+    public string SessionId { get; set; }
+
     public string EventType { get; set; }
 
     public object Clone()

@@ -10,5 +10,7 @@ public class PushHistoricalEventCommand : ICommand<bool>
 
     public string ProductId { get; set; }
 
+    public string SessionId { get; set; }
+
     public string EventType { get; set; }
 }
