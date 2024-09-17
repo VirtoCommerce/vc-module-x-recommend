@@ -19,7 +19,7 @@ public class SqlServerRecommendRawDatabaseCommand : IRecommendRawDatabaseCommand
 	            UserId <> @userId AND
 	            EventType IN ('addToCart','placeOrder')
             )
-            SELECT TOP 5 ProductId FROM HistoricalEvents he
+            SELECT TOP (@limit) ProductId FROM HistoricalEvents he
             INNER JOIN SessionIDs s ON s.SessionId = he.SessionId
             WHERE he.ProductId <> @productId
             GROUP BY ProductId
@@ -30,6 +30,7 @@ public class SqlServerRecommendRawDatabaseCommand : IRecommendRawDatabaseCommand
             new SqlParameter("@storeId", criteria.StoreId),
             new SqlParameter("@productId", criteria.ProductId),
             new SqlParameter("@userId", criteria.UserId),
+            new SqlParameter("@limit", criteria.MaxRecommendations),
         };
 
         var result = await context.ExecuteArrayAsync<string>(commandTemplate, parameters);
