@@ -11,16 +11,11 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
 {
     public class RecommendRepository : DbContextRepositoryBase<XRecommendDbContext>, IRecommendRepository
     {
-        readonly IRecommendRawDatabaseCommand _rawDatabaseCommand;
-
         public RecommendRepository(
-            IRecommendRawDatabaseCommand rawDatabaseCommand,
             XRecommendDbContext dbContext,
             IUnitOfWork unitOfWork = null)
             : base(dbContext, unitOfWork)
         {
-            _rawDatabaseCommand = rawDatabaseCommand;
-
         }
 
         public IQueryable<HistoricalEventEntity> HistoricalEvents => DbContext.Set<HistoricalEventEntity>();
