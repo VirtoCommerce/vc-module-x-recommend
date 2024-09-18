@@ -27,6 +27,7 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
         searchCriteria.ProductId = request.ProductId;
         searchCriteria.UserId = request.UserId;
         searchCriteria.StoreId = request.StoreId;
+        searchCriteria.SessionId = request.SessionId;
         searchCriteria.EventType = request.EventType;
 
         var searchResult = await _eventSearchService.SearchAsync(searchCriteria);
