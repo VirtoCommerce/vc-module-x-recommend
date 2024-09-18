@@ -30,9 +30,34 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
             return await HistoricalEvents.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
 
-        public virtual Task<IList<string>> GetBoughtTogetherProductIdsAsync(GetRecommendationsCriteria criteria)
+        public virtual async Task<IList<string>> GetBoughtTogetherProductIdsAsync(GetRecommendationsCriteria criteria, int minConversionEventsCount)
         {
-            return _rawDatabaseCommand.GetBoughtTogetherProductIdsAsync(DbContext, criteria);
+            if (minConversionEventsCount > 0)
+            {
+                var count = await HistoricalEvents.CountAsync(x => x.StoreId == criteria.StoreId
+                                   && (x.EventType == "addToCart" || x.EventType == "placeOrder"));
+
+                if (count < minConversionEventsCount)
+                {
+                    return new List<string>();
+                }
+            }
+
+            var sessionIds = HistoricalEvents.Where(x => x.StoreId == criteria.StoreId
+                                && x.ProductId == criteria.ProductId
+                                && x.UserId != criteria.UserId
+                                && (x.EventType == "addToCart" || x.EventType == "placeOrder"))
+                            .Select(x => x.SessionId);
+
+            var result = await HistoricalEvents.Join(sessionIds, x => x.SessionId, y => y, (x, y) => x)
+                .Where(x => x.ProductId != criteria.ProductId)
+                .GroupBy(x => x.ProductId)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Key)
+                .Take(criteria.MaxRecommendations)
+                .ToListAsync();
+
+            return result;
         }
     }
 }

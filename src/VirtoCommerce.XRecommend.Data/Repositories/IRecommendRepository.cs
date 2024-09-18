@@ -13,6 +13,6 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
 
         public Task<IList<HistoricalEventEntity>> GetHistoricalEventsByIdsAsync(IList<string> ids, string responseGroup);
 
-        Task<IList<string>> GetBoughtTogetherProductIdsAsync(GetRecommendationsCriteria criteria);
+        Task<IList<string>> GetBoughtTogetherProductIdsAsync(GetRecommendationsCriteria criteria, int minConversionEventsCount);
     }
 }

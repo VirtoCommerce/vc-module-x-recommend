@@ -26,12 +26,21 @@ public static class ModuleConstants
                 DefaultValue = true,
             };
 
+            public static SettingDescriptor MinConversionEvensCount { get; } = new()
+            {
+                Name = "XRecommend.MinConversionEvensCount",
+                GroupName = "Recommendations|General",
+                ValueType = SettingValueType.Integer,
+                IsPublic = true,
+                DefaultValue = 1000,
+            };
 
             public static IEnumerable<SettingDescriptor> AllGeneralSettings
             {
                 get
                 {
                     yield return RecommendationsEnabled;
+                    yield return MinConversionEvensCount;
                 }
             }
         }
@@ -49,6 +58,7 @@ public static class ModuleConstants
             get
             {
                 yield return General.RecommendationsEnabled;
+                yield return General.MinConversionEvensCount;
             }
         }
     }
