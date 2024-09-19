@@ -23,35 +23,38 @@ public class PushHistoricalEventCommandHandler : IRequestHandler<PushHistoricalE
 
     public async Task<bool> Handle(PushHistoricalEventCommand request, CancellationToken cancellationToken)
     {
-        var searchCriteria = AbstractTypeFactory<HistoricalEventSearchCriteria>.TryCreateInstance();
-        searchCriteria.ProductId = request.ProductId;
-        searchCriteria.UserId = request.UserId;
-        searchCriteria.StoreId = request.StoreId;
-        searchCriteria.SessionId = request.SessionId;
-        searchCriteria.EventType = request.EventType;
-
-        var searchResult = await _eventSearchService.SearchAsync(searchCriteria);
-
         var eventsToSave = new List<HistoricalEvent>();
 
-        if (searchResult.Results.Count > 0)
+        foreach (var productId in request.ProductIds)
         {
-            foreach (var trackedEvent in searchResult.Results)
-            {
-                trackedEvent.ModifiedDate = DateTime.UtcNow;
-                eventsToSave.Add(trackedEvent);
-            }
-        }
-        else
-        {
-            var newEvent = AbstractTypeFactory<HistoricalEvent>.TryCreateInstance();
-            newEvent.ProductId = request.ProductId;
-            newEvent.UserId = request.UserId;
-            newEvent.StoreId = request.StoreId;
-            newEvent.SessionId = request.SessionId;
-            newEvent.EventType = request.EventType;
+            var searchCriteria = AbstractTypeFactory<HistoricalEventSearchCriteria>.TryCreateInstance();
+            searchCriteria.ProductId = productId;
+            searchCriteria.UserId = request.UserId;
+            searchCriteria.StoreId = request.StoreId;
+            searchCriteria.SessionId = request.SessionId;
+            searchCriteria.EventType = request.EventType;
 
-            eventsToSave.Add(newEvent);
+            var searchResult = await _eventSearchService.SearchAsync(searchCriteria);
+
+            if (searchResult.Results.Count > 0)
+            {
+                foreach (var trackedEvent in searchResult.Results)
+                {
+                    trackedEvent.ModifiedDate = DateTime.UtcNow;
+                    eventsToSave.Add(trackedEvent);
+                }
+            }
+            else
+            {
+                var newEvent = AbstractTypeFactory<HistoricalEvent>.TryCreateInstance();
+                newEvent.ProductId = productId;
+                newEvent.UserId = request.UserId;
+                newEvent.StoreId = request.StoreId;
+                newEvent.SessionId = request.SessionId;
+                newEvent.EventType = request.EventType;
+
+                eventsToSave.Add(newEvent);
+            }
         }
 
         await _eventService.SaveChangesAsync(eventsToSave);

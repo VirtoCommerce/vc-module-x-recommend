@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
@@ -25,6 +26,13 @@ public class PushHistoricalEventCommandBuilder : CommandBuilder<PushHistoricalEv
         await Authorize(context, null, new RecommendationsAuthorizationRequirement());
 
         request.UserId = context.GetCurrentUserId();
+
+        request.ProductIds ??= [];
+        if (!string.IsNullOrEmpty(request.ProductId))
+        {
+            request.ProductIds.Add(request.ProductId);
+            request.ProductIds = request.ProductIds.Distinct().ToList();
+        }
 
         await base.BeforeMediatorSend(context, request);
     }
