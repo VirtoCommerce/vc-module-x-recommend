@@ -50,19 +50,6 @@ public class Module : IModule, IHasConfiguration
             }
         });
 
-        switch (databaseProvider)
-        {
-            case "MySql":
-                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, MySqlRecommendRawDatabaseCommand>();
-                break;
-            case "PostgreSql":
-                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, PostgreSqlRecommendRawDatabaseCommand>();
-                break;
-            default:
-                serviceCollection.AddTransient<IRecommendRawDatabaseCommand, SqlServerRecommendRawDatabaseCommand>();
-                break;
-        }
-
         serviceCollection.AddTransient<IRecommendRepository, RecommendRepository>();
         serviceCollection.AddTransient<Func<IRecommendRepository>>(provider => () => provider.CreateScope().ServiceProvider.GetRequiredService<IRecommendRepository>());
 
