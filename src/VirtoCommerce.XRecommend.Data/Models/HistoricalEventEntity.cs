@@ -17,6 +17,9 @@ public class HistoricalEventEntity : AuditableEntity, IDataEntity<HistoricalEven
     public string StoreId { get; set; }
 
     [StringLength(128)]
+    public string SessionId { get; set; }
+
+    [StringLength(128)]
     public string EventType { get; set; }
 
     public HistoricalEvent ToModel(HistoricalEvent model)
@@ -30,6 +33,7 @@ public class HistoricalEventEntity : AuditableEntity, IDataEntity<HistoricalEven
         model.ProductId = ProductId;
         model.UserId = UserId;
         model.StoreId = StoreId;
+        model.SessionId = SessionId;
         model.EventType = EventType;
 
         return model;
@@ -48,6 +52,7 @@ public class HistoricalEventEntity : AuditableEntity, IDataEntity<HistoricalEven
         ProductId = model.ProductId;
         UserId = model.UserId;
         StoreId = model.StoreId;
+        SessionId = model.SessionId;
         EventType = model.EventType;
 
         return this;
@@ -58,6 +63,7 @@ public class HistoricalEventEntity : AuditableEntity, IDataEntity<HistoricalEven
         target.ProductId = ProductId;
         target.UserId = UserId;
         target.StoreId = StoreId;
+        target.SessionId = SessionId;
         target.EventType = EventType;
     }
 }

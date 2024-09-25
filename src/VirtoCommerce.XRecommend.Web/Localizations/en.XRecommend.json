@@ -9,6 +9,10 @@
     "XRecommend.RecommendationsEnabled": {
       "title": "Recommendations Enabled",
       "description": "Are product recommendations enabled for this store"
+    },
+    "XRecommend.MinConversionEvensCount": {
+      "title": "Minimal Conversion Events Count",
+      "description": "Minimal conversion events count for recommendations to work. Set 0 for no limit."
     }
   }
 }

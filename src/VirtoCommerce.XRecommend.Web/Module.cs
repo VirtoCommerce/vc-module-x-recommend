@@ -31,10 +31,9 @@ public class Module : IModule, IHasConfiguration
         var graphQLBuilder = new CustomGraphQLBuilder(serviceCollection);
         graphQLBuilder.AddSchema(typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
 
-
+        var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
         serviceCollection.AddDbContext<XRecommendDbContext>(options =>
         {
-            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
             var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ?? Configuration.GetConnectionString("VirtoCommerce");
 
             switch (databaseProvider)
@@ -57,6 +56,7 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<IHistoricalEventService, HistoricalEventService>();
         serviceCollection.AddTransient<IHistoricalEventSearchService, HistoricalEventSearchService>();
         serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
+        serviceCollection.AddTransient<IRecommendationsService, BoughtTogetherRecommendationsService>();
         serviceCollection.AddSingleton<IAuthorizationHandler, RecommendationsAuthorizationHandler>();
     }
 

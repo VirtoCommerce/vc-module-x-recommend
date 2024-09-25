@@ -51,6 +51,10 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("StoreId")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
