@@ -1,18 +1,18 @@
 {
   "permissions": {
-    "XRecommend:create": "Create XRecommend related data",
-    "XRecommend:read": "View XRecommend related data",
-    "XRecommend:update": "Update XRecommend related data",
-    "XRecommend:delete": "Delete XRecommend related data"
+    "XRecommend:create": "Create xRecommend related data",
+    "XRecommend:read": "View xRecommend related data",
+    "XRecommend:update": "Update xRecommend related data",
+    "XRecommend:delete": "Delete xRecommend related data"
   },
   "settings": {
     "XRecommend.RecommendationsEnabled": {
-      "title": "Recommendations Enabled",
-      "description": "Are product recommendations enabled for this store"
+      "title": "Recommendations",
+      "description": "Enable/ disable product recommendations for the store"
     },
-    "XRecommend.MinConversionEvensCount": {
-      "title": "Minimal Conversion Events Count",
-      "description": "Minimal conversion events count for recommendations to work. Set 0 for no limit."
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Minimum number of conversion events",
+      "description": "Set minimum number of conversion events to start generating recommendations. Set 0 for no limit"
     }
   }
 }

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "Crear datos relacionados con xRecommend",
+    "XRecommend:read": "Ver datos relacionados con xRecommend",
+    "XRecommend:update": "Actualizar datos relacionados con xRecommend",
+    "XRecommend:delete": "Eliminar datos relacionados con xRecommend"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Recomendaciones",
+      "description": "Activar/ desactivar recomendaciones de productos para la tienda"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Número mínimo de eventos de conversión",
+      "description": "Establecer el número mínimo de eventos de conversión para empezar a generar recomendaciones. Configura 0 para sin límite"
+    }
+  }
+}

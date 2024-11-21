@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "创建与 xRecommend 相关的数据",
+    "XRecommend:read": "查看与 xRecommend 相关的数据",
+    "XRecommend:update": "更新与 xRecommend 相关的数据",
+    "XRecommend:delete": "删除与 xRecommend 相关的数据"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "推荐",
+      "description": "启用/ 禁用商店的产品推荐"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "最少转换事件数",
+      "description": "设置生成推荐所需的最少转换事件数。设置为 0 表示没有限制"
+    }
+  }
+}
