@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "Create xRecommend related data",
+    "XRecommend:read": "View xRecommend related data",
+    "XRecommend:update": "Update xRecommend related data",
+    "XRecommend:delete": "Delete xRecommend related data"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Recommendations",
+      "description": "Enable/ disable product recommendations for the store"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Minimum number of conversion events",
+      "description": "Set minimum number of conversion events to start generating recommendations. Set 0 for no limit"
+    }
+  }
+}

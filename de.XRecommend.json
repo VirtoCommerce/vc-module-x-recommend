@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "xRecommend-bezogene Daten erstellen",
+    "XRecommend:read": "xRecommend-bezogene Daten anzeigen",
+    "XRecommend:update": "xRecommend-bezogene Daten aktualisieren",
+    "XRecommend:delete": "xRecommend-bezogene Daten löschen"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Empfehlungen",
+      "description": "Produktvorschläge für den Store aktivieren/ deaktivieren"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Minimale Anzahl von Konversionsereignissen",
+      "description": "Minimale Anzahl von Konversionsereignissen festlegen, um Empfehlungen zu generieren. 0 für kein Limit"
+    }
+  }
+}
