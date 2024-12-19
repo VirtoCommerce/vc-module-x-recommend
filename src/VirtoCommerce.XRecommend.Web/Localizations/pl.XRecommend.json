@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "Tworzenie danych powiązanych z xRecommend",
+    "XRecommend:read": "Wyświetlanie danych powiązanych z xRecommend",
+    "XRecommend:update": "Aktualizowanie danych powiązanych z xRecommend",
+    "XRecommend:delete": "Usuwanie danych powiązanych z xRecommend"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Rekomendacje",
+      "description": "Włącz/ wyłącz rekomendacje produktów dla sklepu"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Minimalna liczba zdarzeń konwersji",
+      "description": "Ustaw minimalną liczbę zdarzeń konwersji, aby rozpocząć generowanie rekomendacji. Ustaw 0, aby brakowało ograniczeń"
+    }
+  }
+}
