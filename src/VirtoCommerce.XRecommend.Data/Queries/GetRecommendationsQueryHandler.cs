@@ -9,7 +9,6 @@ using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.StoreModule.Core.Services;
 using VirtoCommerce.Xapi.Core.Infrastructure;
 using VirtoCommerce.XCatalog.Core.Queries;
-using VirtoCommerce.XDigitalCatalog.Queries;
 using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Models;
 using VirtoCommerce.XRecommend.Core.Queries;

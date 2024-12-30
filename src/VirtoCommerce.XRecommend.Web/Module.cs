@@ -1,4 +1,5 @@
 using System;
+using GraphQL.MicrosoftDI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,6 @@ using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.Xapi.Core.Extensions;
-using VirtoCommerce.Xapi.Core.Infrastructure;
 using VirtoCommerce.XRecommend.Core;
 using VirtoCommerce.XRecommend.Core.Services;
 using VirtoCommerce.XRecommend.Data;
@@ -28,8 +28,10 @@ public class Module : IModule, IHasConfiguration
 
     public void Initialize(IServiceCollection serviceCollection)
     {
-        var graphQLBuilder = new CustomGraphQLBuilder(serviceCollection);
-        graphQLBuilder.AddSchema(typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
+        _ = new GraphQLBuilder(serviceCollection, builder =>
+        {
+            builder.AddSchema(serviceCollection, typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
+        });
 
         var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
         serviceCollection.AddDbContext<XRecommendDbContext>(options =>
