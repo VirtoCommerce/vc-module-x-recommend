@@ -12,7 +12,7 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(XRecommendDbContext))]
-    [Migration("20250115145637_AddHistoricalEventsIndex")]
+    [Migration("20250116113052_AddHistoricalEventsIndex")]
     partial class AddHistoricalEventsIndex
     {
         /// <inheritdoc />
@@ -67,6 +67,8 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
                         .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventType", "ProductId", "StoreId", "UserId");
 
                     b.ToTable("HistoricalEvents", (string)null);
                 });

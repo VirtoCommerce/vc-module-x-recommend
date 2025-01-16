@@ -65,6 +65,8 @@ namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EventType", "ProductId", "StoreId", "UserId");
+
                     b.ToTable("HistoricalEvents", (string)null);
                 });
 #pragma warning restore 612, 618

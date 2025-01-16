@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
+namespace VirtoCommerce.XRecommend.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
     public partial class AddHistoricalEventsIndex : Migration
@@ -13,13 +13,15 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_HistoricalEvents_EventType_ProductId_StoreId_UserId",
                 table: "HistoricalEvents",
-                columns: ["EventType", "ProductId", "StoreId", "UserId"]);
+                columns: new[] { "EventType", "ProductId", "StoreId", "UserId" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(name: "IX_HistoricalEvents_EventType_ProductId_StoreId_UserId", table: "HistoricalEvents");
+            migrationBuilder.DropIndex(
+                name: "IX_HistoricalEvents_EventType_ProductId_StoreId_UserId",
+                table: "HistoricalEvents");
         }
     }
 }
