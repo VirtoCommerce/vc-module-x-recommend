@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.841.0" />
-    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.800.0" />
+    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.900.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.XRecommend.Core\VirtoCommerce.XRecommend.Core.csproj" />
