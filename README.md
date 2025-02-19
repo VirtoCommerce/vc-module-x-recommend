@@ -1,11 +1,6 @@
-# Recommendations Module
+# Virto Commerce Recommendations Module
 
-Recommendations Module adds an extendable query to VirtoCommerce Platform that lets you display recommendations.
-
-## Overview
-
-Recommendations Module adds XAPI product recommendations query to VirtoCommerce Platform GraphQL schema. The API provides a list of recommended products based on semantic similarities in product names and other searchable properties. The module is designed to be plug-and-play, integrating seamlessly with back-end and front-end to enhance the user experience by offering intelligent product recommendations.
-
+The Recommendations (or xRecommend) module adds an extendable query to VirtoCommerce Platform that lets you display recommendations. The module adds XAPI product recommendations query to Virto Commerce Platform GraphQL schema. The API provides a list of recommended products based on semantic similarities in product names and other searchable properties. The module is designed to be plug-and-play, integrating seamlessly with back-end and front-end to enhance the user experience by offering intelligent product recommendations.
 
 ![image](./docs/media/recommendations_frontend.png)
 
@@ -18,7 +13,7 @@ Recommendations Module adds XAPI product recommendations query to VirtoCommerce 
 * [VirtoCommerce.ElasticSearch8](https://github.com/VirtoCommerce/vc-module-elastic-search-8) module module version 3.805 or higher
 * **Semantic Search and ELSER Model** should be set up for Elastic Search 8 module. See: [Semantic Search and ELSER Model Setup](https://github.com/VirtoCommerce/vc-module-elastic-search-8?tab=readme-ov-file#semantic-search-and-elser-model-setup)
 
-## Features
+## Key features
 
 * **Semantic Similarity**: Utilizes Elastic Search machine learning model to recommend products that are semantically similar to the given product. 
 * **Customizable**: Parameters such as the number of recommendations can be easily adjusted.
@@ -50,6 +45,22 @@ query {
   }
 }
 ```
+
+## Documentation
+
+* [xRecommend module user documentation](https://docs.virtocommerce.org/platform/user-guide/recommend/overview/)
+* [GraphQL API documentation](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/Recommend/overview/)
+* [REST API](https://virtostart-demo-admin.govirto.com/docs/index.html?urls.primaryName=VirtoCommerce.XRecommend)
+* [View on GitHub](https://github.com/VirtoCommerce/vc-module-x-recommend)
+
+## References
+
+* [Deployment](https://docs.virtocommerce.org/platform/developer-guide/Tutorials-and-How-tos/Tutorials/deploy-module-from-source-code/)
+* [Installation](https://docs.virtocommerce.org/platform/user-guide/modules-installation/)
+* [Home](https://virtocommerce.com)
+* [Community](https://www.virtocommerce.org)
+* [Download latest release](https://github.com/VirtoCommerce/vc-module-x-recommend/releases/latest)
+
 
 ## License
 
