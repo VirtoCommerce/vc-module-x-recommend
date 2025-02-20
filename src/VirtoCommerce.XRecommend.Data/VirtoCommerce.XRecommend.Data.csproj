@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.841.0" />
-    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.900.0" />
+    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.905.0-alpha.73-vcst-2589-update-mediatr" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.XRecommend.Core\VirtoCommerce.XRecommend.Core.csproj" />
