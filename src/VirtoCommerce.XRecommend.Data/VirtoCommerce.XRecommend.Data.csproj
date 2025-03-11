@@ -8,8 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.841.0" />
-    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.905.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.877.0" />
+    <PackageReference Include="VirtoCommerce.XCatalog.Data" Version="3.906.0-alpha.76-vcst-2821" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.XRecommend.Core\VirtoCommerce.XRecommend.Core.csproj" />
