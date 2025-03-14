@@ -1,4 +1,4 @@
-# Virto Commerce Recommendations Module
+# Virto Commerce Recommendations (xRecommend) Module
 
 The Recommendations (or xRecommend) module adds an extendable query to VirtoCommerce Platform that lets you display recommendations. The module adds XAPI product recommendations query to Virto Commerce Platform GraphQL schema. The API provides a list of recommended products based on semantic similarities in product names and other searchable properties. The module is designed to be plug-and-play, integrating seamlessly with back-end and front-end to enhance the user experience by offering intelligent product recommendations.
 
@@ -8,8 +8,8 @@ The Recommendations (or xRecommend) module adds an extendable query to VirtoComm
 
 ## Requirements
 
-* [VirtoCommerce.Xapi](https://github.com/VirtoCommerce/vc-module-x-api) module version 3.800 or higher
-* [VirtoCommerce.XCatalog](https://github.com/VirtoCommerce/vc-module-x-catalog) module version 3.800 or higher
+* [VirtoCommerce.xAPI](https://github.com/VirtoCommerce/vc-module-x-api) module version 3.800 or higher
+* [VirtoCommerce.xCatalog](https://github.com/VirtoCommerce/vc-module-x-catalog) module version 3.800 or higher
 * [VirtoCommerce.ElasticSearch8](https://github.com/VirtoCommerce/vc-module-elastic-search-8) module module version 3.805 or higher
 * **Semantic Search and ELSER Model** should be set up for Elastic Search 8 module. See: [Semantic Search and ELSER Model Setup](https://github.com/VirtoCommerce/vc-module-elastic-search-8?tab=readme-ov-file#semantic-search-and-elser-model-setup)
 
@@ -51,6 +51,12 @@ query {
 * [xRecommend module user documentation](https://docs.virtocommerce.org/platform/user-guide/recommend/overview/)
 * [GraphQL API documentation](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/Recommend/overview/)
 * [REST API](https://virtostart-demo-admin.govirto.com/docs/index.html?urls.primaryName=VirtoCommerce.XRecommend)
+* [Experience API Documentation](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/)
+* [Getting started](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/getting-started/)
+* [How to use GraphiQL](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/graphiql/)
+* [How to use Postman](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/postman/)
+* [How to extend](https://docs.virtocommerce.org/platform/developer-guide/GraphQL-Storefront-API-Reference-xAPI/x-api-extensions/)
+* [Virto Commerce Frontend architecture](https://docs.virtocommerce.org/storefront/developer-guide/architecture/)
 * [View on GitHub](https://github.com/VirtoCommerce/vc-module-x-recommend)
 
 ## References
