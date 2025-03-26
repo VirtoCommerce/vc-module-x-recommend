@@ -6,8 +6,8 @@
 
   <platformVersion>3.877.0</platformVersion>
   <dependencies>
-    <dependency id="VirtoCommerce.Xapi" version="3.906.0-alpha.75-vcst-2821" />
-    <dependency id="VirtoCommerce.XCatalog" version="3.906.0-alpha.76-vcst-2821" />
+    <dependency id="VirtoCommerce.Xapi" version="3.906.0" />
+    <dependency id="VirtoCommerce.XCatalog" version="3.908.0" />
   </dependencies>
 
   <title>Product Recommendations</title>
