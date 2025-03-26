@@ -4,10 +4,10 @@
   <version>3.902.0</version>
   <version-tag></version-tag>
 
-  <platformVersion>3.841.0</platformVersion>
+  <platformVersion>3.877.0</platformVersion>
   <dependencies>
-    <dependency id="VirtoCommerce.Xapi" version="3.904.0" />
-    <dependency id="VirtoCommerce.XCatalog" version="3.905.0" />
+    <dependency id="VirtoCommerce.Xapi" version="3.906.0" />
+    <dependency id="VirtoCommerce.XCatalog" version="3.908.0" />
   </dependencies>
 
   <title>Product Recommendations</title>
@@ -28,7 +28,7 @@
   <moduleType>VirtoCommerce.XRecommend.Web.Module, VirtoCommerce.XRecommend.Web</moduleType>
 
   <releaseNotes>First version.</releaseNotes>
-  <copyright>Copyright © 2024-2025 VirtoCommerce. All rights reserved</copyright>
+  <copyright>Copyright © 2024–2025 VirtoCommerce. All rights reserved</copyright>
   <tags>extension module</tags>
   <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>
