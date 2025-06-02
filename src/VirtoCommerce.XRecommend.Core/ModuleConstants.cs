@@ -26,9 +26,9 @@ public static class ModuleConstants
                 DefaultValue = true,
             };
 
-            public static SettingDescriptor MinConversionEvensCount { get; } = new()
+            public static SettingDescriptor MinConversionEventsCount { get; } = new()
             {
-                Name = "XRecommend.MinConversionEvensCount",
+                Name = "XRecommend.MinConversionEventsCount",
                 GroupName = "Recommendations|General",
                 ValueType = SettingValueType.Integer,
                 IsPublic = true,
@@ -40,7 +40,7 @@ public static class ModuleConstants
                 get
                 {
                     yield return RecommendationsEnabled;
-                    yield return MinConversionEvensCount;
+                    yield return MinConversionEventsCount;
                 }
             }
         }
@@ -58,7 +58,7 @@ public static class ModuleConstants
             get
             {
                 yield return General.RecommendationsEnabled;
-                yield return General.MinConversionEvensCount;
+                yield return General.MinConversionEventsCount;
             }
         }
     }
