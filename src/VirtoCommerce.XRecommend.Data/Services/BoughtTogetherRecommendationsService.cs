@@ -35,6 +35,6 @@ public class BoughtTogetherRecommendationsService : IRecommendationsService
 
         using var repository = _repositoryFactory();
 
-        return await repository.GetBoughtTogetherProductIdsAsync(criteria, store.Settings.GetValue<int>(ModuleConstants.Settings.General.MinConversionEvensCount));
+        return await repository.GetBoughtTogetherProductIdsAsync(criteria, store.Settings.GetValue<int>(ModuleConstants.Settings.General.MinConversionEventsCount));
     }
 }
