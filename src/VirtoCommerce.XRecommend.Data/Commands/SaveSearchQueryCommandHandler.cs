@@ -13,6 +13,11 @@ public class SaveSearchQueryCommandHandler(ISearchQueryService searchQueryServic
 {
     public async Task<bool> Handle(SaveSearchQueryCommand request, CancellationToken cancellationToken)
     {
+        if (request.Query.IsNullOrEmpty())
+        {
+            return false;
+        }
+
         var query = AbstractTypeFactory<SearchQuery>.TryCreateInstance();
         query.UserId = request.UserId;
         query.OrganizationId = request.OrganizationId;
