@@ -2,20 +2,21 @@ using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
 using VirtoCommerce.XRecommend.Core.Models;
+using static VirtoCommerce.Platform.Data.Infrastructure.DbContextBase;
 
 namespace VirtoCommerce.XRecommend.Data.Models;
 
 public class SearchQueryEntity : AuditableEntity, IDataEntity<SearchQueryEntity, SearchQuery>
 {
     [Required]
-    [MaxLength(128)]
+    [MaxLength(IdLength)]
     public string UserId { get; set; }
 
-    [MaxLength(128)]
+    [MaxLength(IdLength)]
     public string OrganizationId { get; set; }
 
     [Required]
-    [MaxLength(128)]
+    [MaxLength(IdLength)]
     public string StoreId { get; set; }
 
     [Required]
