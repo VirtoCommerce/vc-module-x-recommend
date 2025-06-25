@@ -1,8 +1,8 @@
-﻿using VirtoCommerce.Xapi.Core.Infrastructure;
-using VirtoCommerce.XRecommend.Core.Models;
+using VirtoCommerce.Xapi.Core.Infrastructure;
 using ISearchQuery = VirtoCommerce.XRecommend.Core.Models.ISearchQuery;
 
 namespace VirtoCommerce.XRecommend.Core.Commands;
+
 public class SaveSearchQueryCommand : ICommand<bool>, ISearchQuery
 {
     public string UserId { get; set; }
