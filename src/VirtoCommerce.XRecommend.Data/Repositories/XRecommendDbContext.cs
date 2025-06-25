@@ -25,6 +25,13 @@ public class XRecommendDbContext : DbContextBase
         modelBuilder.Entity<HistoricalEventEntity>().Property(x => x.Id).HasMaxLength(128).ValueGeneratedOnAdd();
         modelBuilder.Entity<HistoricalEventEntity>().HasIndex(x => new { x.EventType, x.ProductId, x.StoreId, x.UserId });
 
+        modelBuilder.Entity<SearchQueryEntity>(builder =>
+        {
+            builder.ToTable("SearchQuery").HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasMaxLength(IdLength).ValueGeneratedOnAdd();
+            builder.HasIndex(x => new { x.UserId, x.OrganizationId, x.StoreId });
+        });
+
         switch (Database.ProviderName)
         {
             case "Pomelo.EntityFrameworkCore.MySql":
