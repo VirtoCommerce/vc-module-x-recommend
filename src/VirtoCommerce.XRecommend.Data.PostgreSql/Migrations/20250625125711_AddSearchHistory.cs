@@ -16,10 +16,10 @@ namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
-                    UserId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    UserId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     OrganizationId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    Query = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    StoreId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    Query = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreatedBy = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),

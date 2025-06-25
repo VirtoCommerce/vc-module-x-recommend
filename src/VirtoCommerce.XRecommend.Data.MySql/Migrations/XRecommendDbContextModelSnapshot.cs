@@ -96,14 +96,17 @@ namespace VirtoCommerce.XRecommend.Data.MySql.Migrations
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("Query")
+                        .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("varchar(2048)");
 
                     b.Property<string>("StoreId")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 

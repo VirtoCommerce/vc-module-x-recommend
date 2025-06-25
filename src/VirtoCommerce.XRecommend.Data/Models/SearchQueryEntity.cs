@@ -7,15 +7,18 @@ namespace VirtoCommerce.XRecommend.Data.Models;
 
 public class SearchQueryEntity : AuditableEntity, IDataEntity<SearchQueryEntity, SearchQuery>
 {
+    [Required]
     [MaxLength(128)]
     public string UserId { get; set; }
 
     [MaxLength(128)]
     public string OrganizationId { get; set; }
 
+    [Required]
     [MaxLength(128)]
     public string StoreId { get; set; }
 
+    [Required]
     [MaxLength(2048)]
     public string Query { get; set; }
 
