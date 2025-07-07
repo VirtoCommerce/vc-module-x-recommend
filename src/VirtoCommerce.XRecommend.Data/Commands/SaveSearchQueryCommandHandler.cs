@@ -13,7 +13,9 @@ public class SaveSearchQueryCommandHandler(ISearchQueryService searchQueryServic
 {
     public async Task<bool> Handle(SaveSearchQueryCommand request, CancellationToken cancellationToken)
     {
-        if (request.Query.IsNullOrEmpty())
+        var keyword = request.Query?.Trim();
+
+        if (keyword.IsNullOrEmpty())
         {
             return false;
         }
@@ -22,7 +24,7 @@ public class SaveSearchQueryCommandHandler(ISearchQueryService searchQueryServic
         query.UserId = request.UserId;
         query.OrganizationId = request.OrganizationId;
         query.StoreId = request.StoreId;
-        query.Query = request.Query;
+        query.Query = keyword;
 
         await searchQueryService.SaveChangesAsync([query]);
 
