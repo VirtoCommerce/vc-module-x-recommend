@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Domain;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.XRecommend.Core.Models;
@@ -9,16 +10,12 @@ using VirtoCommerce.XRecommend.Data.Models;
 
 namespace VirtoCommerce.XRecommend.Data.Repositories
 {
-    public class RecommendRepository : DbContextRepositoryBase<XRecommendDbContext>, IRecommendRepository
+    public class RecommendRepository(XRecommendDbContext dbContext, IUnitOfWork unitOfWork = null)
+        : DbContextRepositoryBase<XRecommendDbContext>(dbContext, unitOfWork), IRecommendRepository
     {
-        public RecommendRepository(
-            XRecommendDbContext dbContext,
-            IUnitOfWork unitOfWork = null)
-            : base(dbContext, unitOfWork)
-        {
-        }
-
         public IQueryable<HistoricalEventEntity> HistoricalEvents => DbContext.Set<HistoricalEventEntity>();
+
+        public IQueryable<SearchQueryEntity> SearchQueries => DbContext.Set<SearchQueryEntity>();
 
         public virtual async Task<IList<HistoricalEventEntity>> GetHistoricalEventsByIdsAsync(IList<string> ids, string responseGroup)
         {
@@ -53,6 +50,18 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
                 .ToListAsync();
 
             return result;
+        }
+
+        public virtual async Task<IList<SearchQueryEntity>> GetSearchQueriesByIdsAsync(IList<string> ids, string responseGroup)
+        {
+            if (ids.IsNullOrEmpty())
+            {
+                return [];
+            }
+
+            return ids.Count == 1
+                ? await SearchQueries.Where(x => x.Id == ids.First()).ToListAsync()
+                : await SearchQueries.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
     }
 }

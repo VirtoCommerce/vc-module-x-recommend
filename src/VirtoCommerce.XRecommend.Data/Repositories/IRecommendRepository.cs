@@ -9,10 +9,11 @@ namespace VirtoCommerce.XRecommend.Data.Repositories
 {
     public interface IRecommendRepository : IRepository
     {
-        public IQueryable<HistoricalEventEntity> HistoricalEvents { get; }
+        IQueryable<HistoricalEventEntity> HistoricalEvents { get; }
+        IQueryable<SearchQueryEntity> SearchQueries { get; }
 
-        public Task<IList<HistoricalEventEntity>> GetHistoricalEventsByIdsAsync(IList<string> ids, string responseGroup);
-
+        Task<IList<HistoricalEventEntity>> GetHistoricalEventsByIdsAsync(IList<string> ids, string responseGroup);
         Task<IList<string>> GetBoughtTogetherProductIdsAsync(GetRecommendationsCriteria criteria, int minConversionEventsCount);
+        Task<IList<SearchQueryEntity>> GetSearchQueriesByIdsAsync(IList<string> ids, string responseGroup);
     }
 }

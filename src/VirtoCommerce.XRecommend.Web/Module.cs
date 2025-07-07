@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
+using VirtoCommerce.Platform.Data.MySql.Extensions;
+using VirtoCommerce.Platform.Data.PostgreSql.Extensions;
+using VirtoCommerce.Platform.Data.SqlServer.Extensions;
 using VirtoCommerce.StoreModule.Core.Model;
 using VirtoCommerce.Xapi.Core.Extensions;
 using VirtoCommerce.XRecommend.Core;
@@ -33,21 +36,21 @@ public class Module : IModule, IHasConfiguration
             builder.AddSchema(serviceCollection, typeof(CoreAssemblyMarker), typeof(DataAssemblyMarker));
         });
 
-        var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
         serviceCollection.AddDbContext<XRecommendDbContext>(options =>
         {
+            var databaseProvider = Configuration.GetValue("DatabaseProvider", "SqlServer");
             var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ?? Configuration.GetConnectionString("VirtoCommerce");
 
             switch (databaseProvider)
             {
                 case "MySql":
-                    options.UseMySqlDatabase(connectionString);
+                    options.UseMySqlDatabase(connectionString, typeof(MySqlDataAssemblyMarker), Configuration);
                     break;
                 case "PostgreSql":
-                    options.UsePostgreSqlDatabase(connectionString);
+                    options.UsePostgreSqlDatabase(connectionString, typeof(PostgreSqlDataAssemblyMarker), Configuration);
                     break;
                 default:
-                    options.UseSqlServerDatabase(connectionString);
+                    options.UseSqlServerDatabase(connectionString, typeof(SqlServerDataAssemblyMarker), Configuration);
                     break;
             }
         });
@@ -60,6 +63,10 @@ public class Module : IModule, IHasConfiguration
         serviceCollection.AddTransient<IRecommendationsService, RelatedProductsRecommendationsService>();
         serviceCollection.AddTransient<IRecommendationsService, BoughtTogetherRecommendationsService>();
         serviceCollection.AddSingleton<IAuthorizationHandler, RecommendationsAuthorizationHandler>();
+
+        serviceCollection.AddTransient<ISearchQueryService, SearchQueryService>();
+        serviceCollection.AddTransient<ISearchQuerySearchService, SearchQuerySearchService>();
+        serviceCollection.AddSingleton<IAuthorizationHandler, SearchHistoryAuthorizationHandler>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

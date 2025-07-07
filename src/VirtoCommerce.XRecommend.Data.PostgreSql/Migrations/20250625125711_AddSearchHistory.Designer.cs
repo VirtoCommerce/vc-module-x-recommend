@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using VirtoCommerce.XRecommend.Data.Repositories;
@@ -11,9 +12,11 @@ using VirtoCommerce.XRecommend.Data.Repositories;
 namespace VirtoCommerce.XRecommend.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(XRecommendDbContext))]
-    partial class XRecommendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250625125711_AddSearchHistory")]
+    partial class AddSearchHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
