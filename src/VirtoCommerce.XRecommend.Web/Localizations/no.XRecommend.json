@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "Opprett data relatert til xRecommend",
+    "XRecommend:read": "Vis data relatert til xRecommend",
+    "XRecommend:update": "Oppdater data relatert til xRecommend",
+    "XRecommend:delete": "Slett data relatert til xRecommend"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Anbefalinger",
+      "description": "Aktiver/deaktiver produktanbefalinger for butikken"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Minimum antall konverteringshendelser",
+      "description": "Angi minimum antall konverteringshendelser for å starte generering av anbefalinger. Sett til 0 for ingen begrensning"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "XRecommend:create": "Luo xRecommendiin liittyviä tietoja",
+    "XRecommend:read": "Näytä xRecommendiin liittyviä tietoja",
+    "XRecommend:update": "Päivitä xRecommendiin liittyviä tietoja",
+    "XRecommend:delete": "Poista xRecommendiin liittyviä tietoja"
+  },
+  "settings": {
+    "XRecommend.RecommendationsEnabled": {
+      "title": "Suositukset",
+      "description": "Ota käyttöön tai poista käytöstä tuotteen suositukset kaupassa"
+    },
+    "XRecommend.MinConversionEventsCount": {
+      "title": "Vähimmäismäärä konversiotapahtumia",
+      "description": "Aseta vähimmäismäärä konversiotapahtumia suositusten generoinnin aloittamiseksi. Aseta 0 ilman rajoitusta"
+    }
+  }
+}
