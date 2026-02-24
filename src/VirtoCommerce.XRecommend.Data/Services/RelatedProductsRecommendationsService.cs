@@ -31,7 +31,7 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
     public async Task<IList<string>> GetRecommendationsAsync(GetRecommendationsCriteria criteria)
     {
         // check ES8, ES9 enabled and return mock result if not (temporary)
-        if (!_configuration.SearchProviderActive("ElasticSearch8") ||
+        if (!_configuration.SearchProviderActive("ElasticSearch8") &&
             !_configuration.SearchProviderActive("ElasticSearch9"))
         {
             var builder = new IndexSearchRequestBuilder()
@@ -138,7 +138,7 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             .WithIncludeFields("_id");
 
         builder.AddTermFilter("status", "visible");
-        builder.AddTermFilter("__outline", "catalogId");
+        builder.AddTermFilter("__outline", catalogId);
 
         return builder.Build();
     }
