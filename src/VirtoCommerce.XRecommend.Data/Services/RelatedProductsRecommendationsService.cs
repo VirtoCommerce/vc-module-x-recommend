@@ -21,8 +21,6 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
 
     public string Model { get; set; } = "related-products";
 
-    private static readonly string[] StatusVisible = ["status:visible"];
-
     public RelatedProductsRecommendationsService(IStoreService storeService, ISearchProvider searchProvider, IConfiguration configuration)
     {
         _searchProvider = searchProvider;
@@ -32,8 +30,9 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
 
     public async Task<IList<string>> GetRecommendationsAsync(GetRecommendationsCriteria criteria)
     {
-        // check ES8 enabled and return mock result if not (temporary)
-        if (!_configuration.SearchProviderActive("ElasticSearch8"))
+        // check ES8, ES9 enabled and return mock result if not (temporary)
+        if (!_configuration.SearchProviderActive("ElasticSearch8") ||
+            !_configuration.SearchProviderActive("ElasticSearch9"))
         {
             var builder = new IndexSearchRequestBuilder()
                 .WithStoreId(criteria.StoreId)
@@ -138,8 +137,8 @@ public class RelatedProductsRecommendationsService : IRecommendationsService
             .WithSearchPhrase(content)
             .WithIncludeFields("_id");
 
-        builder.AddTerms(StatusVisible);
-        builder.AddTerms(new[] { $"__outline:{catalogId}" });
+        builder.AddTermFilter("status", "visible");
+        builder.AddTermFilter("__outline", "catalogId");
 
         return builder.Build();
     }
