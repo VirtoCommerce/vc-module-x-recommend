@@ -44,7 +44,7 @@ public class GetRecommendationsQueryHandler : IQueryHandler<GetRecommendationsQu
             return result;
         }
 
-        var _recommendService = _recommendServices.FirstOrDefault(x => x.Model.EqualsInvariant(request.Model));
+        var _recommendService = _recommendServices.FirstOrDefault(x => x.Model.EqualsIgnoreCase(request.Model));
         if (_recommendService != null)
         {
             var recommendationsCriteria = GetRelatedProductsCriteria(request);
