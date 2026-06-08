@@ -21,7 +21,7 @@
   </owners>
 
   <projectUrl>https://github.com/VirtoCommerce/vc-module-x-recommend</projectUrl>
-  <iconUrl>Modules/$(VirtoCommerce.XRecommend)/Content/logo.png</iconUrl>
+  <iconUrl>Modules/$(VirtoCommerce.XRecommend)/Content/logo.svg</iconUrl>
   <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
   <assemblyFile>VirtoCommerce.XRecommend.Web.dll</assemblyFile>
