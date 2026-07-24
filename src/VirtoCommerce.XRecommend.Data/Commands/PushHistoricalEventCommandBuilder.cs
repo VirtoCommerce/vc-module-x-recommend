@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
@@ -16,8 +17,14 @@ public class PushHistoricalEventCommandBuilder : CommandBuilder<PushHistoricalEv
 {
     protected override string Name => "pushHistoricalEvent";
 
+    public PushHistoricalEventCommandBuilder(IAuthorizationService authorizationService)
+        : base(authorizationService)
+    {
+    }
+
+    [Obsolete("Use the constructor without IMediator. The mediator is resolved from context.RequestServices per request.", DiagnosticId = "VC0015", UrlFormat = "https://docs.virtocommerce.org/products/products-virto3-versions")]
     public PushHistoricalEventCommandBuilder(IMediator mediator, IAuthorizationService authorizationService)
-        : base(mediator, authorizationService)
+        : this(authorizationService)
     {
     }
 
